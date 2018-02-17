@@ -1,0 +1,79 @@
+{
+  "pools": [
+    {
+      "id": "hv",
+      "name": "Hash Vault"
+    },
+    {
+      "id": "sp",
+      "name": "supportXMR.com"
+    },
+    {
+      "id": "c",
+      "name": "Custom"
+    }
+  ],
+  "hv": {
+    "editor": "nodejs-pool",
+    "coins": [
+      {
+        "code": "XMR",
+        "name": "Monero",
+        "url": "pool.monero.hashvault.pro:3333"
+      },
+      {
+        "code": "SUMO",
+        "name": "Sumokoin",
+        "url": "pool.sumokoin.hashvault.pro:3333"
+      },
+      {
+        "code": "XRB",
+        "name": "Karbo",
+        "url": "pool.karbo.hashvault.pro:3333"
+      },
+      {
+        "code": "ETN",
+        "name": "Electroneum",
+        "url": "pool.electroneum.hashvault.pro:3333"
+      },
+      {
+        "code": "ITNS",
+        "name": "Intense",
+        "url": "pool.intense.hashvault.pro:3333"
+      },
+      {
+        "code": "XLC",
+        "name": "Leviarcoin",
+        "url": "pool.leviarcoin.hashvault.pro:3333"
+      },
+      {
+        "code": "FNO",
+        "name": "Fonero",
+        "url": "pool.fonero.hashvault.pro:3333"
+      },
+      {
+        "code": "EDL",
+        "name": "Edollar",
+        "url": "pool.edollar.hashvault.pro:3333"
+      },
+      {
+        "code": "GRFT",
+        "name": "Graft",
+        "url": "pool.graft.hashvault.pro:3333"
+      }
+    ]
+  },
+  "sp": {
+    "editor": "nodejs-pool",
+    "coins": [
+      {
+        "code": "XMR",
+        "name": "Monero",
+        "url": "pool.supportxmr.com:5555"
+      }
+    ]
+  },
+  "c": {
+    "editor": "custom"
+  }
+}

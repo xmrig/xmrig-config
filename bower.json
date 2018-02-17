@@ -1,0 +1,9 @@
+{
+  "name": "xmrig-config",
+  "main": "index.js",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "bootstrap": "3.3.7"
+  }
+}

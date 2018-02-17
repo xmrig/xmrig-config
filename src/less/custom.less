@@ -1,0 +1,80 @@
+.modal-content .alert {
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.no-margin-top {
+  margin-top: 0;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
+.list-group-item {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    background-color: #f5f5f5;
+  }
+
+  > .pull-right {
+    margin-top: -1px;
+
+    > .btn-sm {
+      margin-top: -4px;
+    }
+
+    > .btn-xs {
+      margin-top: -4px;
+    }
+  }
+}
+
+.text-or {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #eaeaea;
+  line-height:0.1em;
+  margin:30px 0;
+
+  > span {
+    background:#fff;
+    padding:0 10px;
+  }
+}
+
+.checkbox-list-group {
+  .list-group-item {
+    padding: 14px 10px 14px 14px;
+
+    .pool-line {
+      padding-right: 50px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    > .pull-right {
+      > .btn {
+        margin-top: -6px;
+      }
+    }
+
+    > .checkbox {
+      margin: 0;
+
+      & input[type="checkbox"] {
+        margin-left: -15px;
+      }
+    }
+  }
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.table-middle > tbody > tr > td {
+  vertical-align: middle;
+}

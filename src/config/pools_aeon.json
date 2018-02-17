@@ -1,0 +1,27 @@
+{
+  "pools": [
+    {
+      "id": "hv",
+      "name": "Hash Vault",
+      "type": "nodejs-pool"
+    },
+    {
+      "id": "c",
+      "name": "Custom",
+      "type": "custom"
+    }
+  ],
+  "hv": {
+    "editor": "nodejs-pool",
+    "coins": [
+      {
+        "code": "AEON",
+        "name": "AEON",
+        "url": "pool.aeon.hashvault.pro:3333"
+      }
+    ]
+  },
+  "c": {
+    "editor": "custom"
+  }
+}

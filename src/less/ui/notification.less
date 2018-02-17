@@ -1,0 +1,31 @@
+#notification {
+  position: fixed;
+  top: 3px;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  & > .alert {
+    min-width: 250px;
+    margin-bottom: 0;
+    padding: 10px 15px;
+
+    animation: fadein 200ms;
+  }
+
+  & > .alert-dismissible {
+    & .close {
+      top: 0;
+      right: -8px;
+      opacity: 0.4;
+    }
+  }
+}
+
+@keyframes fadein {
+  from { opacity: .1; }
+  to   { opacity: 1; }
+}
