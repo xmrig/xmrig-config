@@ -52,6 +52,7 @@ const INITIAL_STATE = {
     apiPort:    0,
     apiToken:   null,
     apiId:      null,
+    bind:       '0.0.0.0:3333'
   },
   [KIND_AMD_LEGACY]: {
     version:     20400,

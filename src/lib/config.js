@@ -78,6 +78,13 @@ export const getCommandLine = (type, options) => {
     strOption(array, '--api-access-token', options.apiToken);
   }
 
+  if (isProxy) {
+    const bind = options.bind.split('\n').filter(bind => !!bind);
+    for (let addr of bind) {
+      array.push(`-b ${addr}`);
+    }
+  }
+
   if (type === KIND_XMRIG) {
     const { cpuThreads } = options;
 
@@ -297,6 +304,10 @@ export const getJSON = (type, options, str = true) => {
       keepalive: !!pool.keepalive,
       nicehash:  !!pool.nicehash
     }));
+  }
+
+  if (isProxy) {
+    result.bind = options.bind.split('\n').filter(bind => !!bind);
   }
 
   result.api = {

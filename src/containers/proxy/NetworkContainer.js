@@ -3,13 +3,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Network from '../../components/Network';
+import {update} from "../../actions/config";
 import {KIND_PROXY} from "../../constants/options";
 import AddPoolModal from "../../components/modals/AddPoolModal";
 import EditPoolModal from "../../components/modals/EditPoolModal";
 import DeletePoolModal from "../../components/modals/DeletePoolModal";
 
 
-const NetworkContainer = ({ algo, apiPort, apiToken, apiId, pools, update, add, edit, remove }) => (
+const NetworkContainer = ({ algo, apiPort, apiToken, apiId, pools, bind, update, add, edit, remove }) => (
   <Network
     algo={algo}
     type="proxy"
@@ -17,6 +18,7 @@ const NetworkContainer = ({ algo, apiPort, apiToken, apiId, pools, update, add, 
     apiToken={apiToken}
     apiId={apiId}
     pools={pools}
+    bind={bind}
     update={update}
     add={add}
     edit={edit}
@@ -30,7 +32,8 @@ const mapStateToProps = state => ({
   apiPort:  state.config[KIND_PROXY].apiPort,
   apiToken: state.config[KIND_PROXY].apiToken,
   apiId:    state.config[KIND_PROXY].apiId,
-  pools:    state.config[KIND_PROXY].pools
+  pools:    state.config[KIND_PROXY].pools,
+  bind:     state.config[KIND_PROXY].bind,
 });
 
 

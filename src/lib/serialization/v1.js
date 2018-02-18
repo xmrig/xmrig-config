@@ -6,7 +6,7 @@ import {
 } from "../../constants/options";
 
 const MINER_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","cpuThreads","oclThreads","cudaThreads","printTime"];
-const PROXY_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","accessLog","verbose"];
+const PROXY_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","accessLog","verbose","bind"];
 const POOL_KEYS  = ["id","url","user","pass","enabled","keepalive","nicehash","ssl","pool","coin"];
 const OCL_KEYS   = ["index","intensity","worksize","affine_to_cpu"];
 const CUDA_KEYS  = ["index","threads","blocks","bfactor","bsleep","affine_to_cpu"];

@@ -7,6 +7,8 @@ import Navbar from './Navbar';
 import Tabs from './Tabs';
 import ApiForm from './network/ApiForm';
 import PoolRow from './network/PoolRow';
+import {KIND_PROXY} from "../constants/options";
+import BindForm from "./network/BindForm";
 
 
 export default class Network extends React.PureComponent {
@@ -21,6 +23,7 @@ export default class Network extends React.PureComponent {
 
           <h2>Pools <button className="btn btn-success" onClick={this.add}><Icon icon="plus" /> Add</button></h2>
           {this.renderPools()}
+          {this.renderBind()}
 
           <h2>HTTP API</h2>
           <ApiForm
@@ -34,7 +37,7 @@ export default class Network extends React.PureComponent {
 
           <nav>
             <ul className="pager">
-              <li><Link to={`/${type}`}>Previous</Link></li> <li><Link to={`/${type}/${type === 'proxy' ? 'misc' : 'threads'}`}>Next</Link></li>
+              <li><Link to={`/${type}`}>Previous</Link></li> <li><Link to={`/${type}/${type === KIND_PROXY ? 'misc' : 'threads'}`}>Next</Link></li>
             </ul>
           </nav>
         </div>
@@ -52,6 +55,20 @@ export default class Network extends React.PureComponent {
       <ul className="list-group checkbox-list-group">
         {this.props.pools.map((pool, index) => <PoolRow key={pool.id} pool={pool} primary={index === 0} edit={this.props.edit} remove={this.props.remove} />)}
       </ul>
+    );
+  }
+
+
+  renderBind() {
+    if (this.props.type !== KIND_PROXY) {
+      return;
+    }
+
+    return (
+      <div>
+        <h2>Bind</h2>
+        <BindForm bind={this.props.bind} update={this.props.update} />
+      </div>
     );
   }
 
