@@ -8,6 +8,25 @@ XMRig config generator & editor, available online https://config.xmrig.com
 * Pure Single Page Application, serverless, no tracking.
 
 # Install
+### Easy
+* Just copy [public](https://github.com/xmrig/xmrig-config/tree/master/public) directory to your webserver root.
+* If you use nginx, edit and copy [xmrig-config.conf](https://github.com/xmrig/xmrig-config/blob/master/config/xmrig-config.conf) to proper location.
+
+### Advanced
+* Dependences
+```
+npm install -g bower
+npm install
+bower install
+```
+* Development server http://127.0.0.1:8081
+```
+npm start
+```
+* Production files
+```
+npm run build
+```
 
 ## Donations
 
