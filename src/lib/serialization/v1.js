@@ -7,7 +7,7 @@ import {
 
 const MINER_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","cpuThreads","oclThreads","cudaThreads","printTime"];
 const PROXY_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","accessLog","verbose","bind"];
-const POOL_KEYS  = ["id","url","user","pass","enabled","keepalive","nicehash","ssl","pool","coin"];
+const POOL_KEYS  = ["id","url","user","pass","enabled","keepalive","nicehash","ssl","pool","coin","variant"];
 const OCL_KEYS   = ["index","intensity","worksize","affine_to_cpu"];
 const CUDA_KEYS  = ["index","threads","blocks","bfactor","bsleep","affine_to_cpu"];
 const KINDS      = [KIND_XMRIG, KIND_PROXY, KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY];
@@ -153,7 +153,15 @@ function restoreCUDA(threads) {
 
 
 function getPools(pools, proxy) {
-  return pools.map(pool => Object.assign({ proxy, name: '' }, array2object(pool, POOL_KEYS)));
+  const result = pools.map(pool => Object.assign({ proxy, name: '' }, array2object(pool, POOL_KEYS)));
+
+  for (let pool of result) {
+    if (pool.variant === undefined) { // since v2.5
+      pool.variant = -1;
+    }
+  }
+
+  return result;
 }
 
 

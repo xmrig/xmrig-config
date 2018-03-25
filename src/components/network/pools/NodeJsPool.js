@@ -65,7 +65,6 @@ export default class NodeJsPool extends React.PureComponent {
       return;
     }
 
-    console.log(coin);
     let user   = this.state.wallet;
     let pass   = this.state.worker || 'x';
     const diff = this.state.diff;
@@ -93,15 +92,11 @@ export default class NodeJsPool extends React.PureComponent {
     const user = props.user.split('+');
     const pass = props.pass.split(':');
 
-    const state = {
+    return {
       wallet: user[0],
       worker: pass[0],
       email:  pass[1]  || '',
       diff:   +user[1] || ''
     };
-
-    console.log(user);
-
-    return state;
   }
 }

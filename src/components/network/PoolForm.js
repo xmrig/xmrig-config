@@ -37,6 +37,7 @@ export default class PoolForm extends Form {
                       keepalive={this.props.keepalive}
                       nicehash={this.props.nicehash}
                       isProxy={this.props.isProxy}
+                      variant={this.props.variant}
                       submit={this.props.submit}
                       update={this.props.update}
     />

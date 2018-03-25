@@ -33,7 +33,8 @@ export default class AddPoolModal extends AsyncModal {
       nicehash:  0,
       ssl:       0,
       pool:      'hv',
-      coin:      props.algo === ALGO_CRYPTONIGHT_LITE ? 'AEON' : 'XMR'
+      coin:      props.algo === ALGO_CRYPTONIGHT_LITE ? 'AEON' : 'XMR',
+      variant:   -1
     };
   }
 
@@ -57,6 +58,7 @@ export default class AddPoolModal extends AsyncModal {
             nicehash={this.state.nicehash}
             isProxy={this.state.proxy}
             ro={false}
+            variant={this.state.variant}
             submit={this.submit}
             update={this.update}
           />

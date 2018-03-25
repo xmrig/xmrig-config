@@ -36,7 +36,8 @@ export default class EditPoolModal extends AsyncModal {
       nicehash:  pool.nicehash,
       ssl:       pool.ssl,
       pool:      pool.pool,
-      coin:      pool.coin
+      coin:      pool.coin,
+      variant:   pool.variant
     }
   }
 
@@ -58,6 +59,7 @@ export default class EditPoolModal extends AsyncModal {
             nicehash={this.state.nicehash}
             isProxy={this.state.proxy}
             ro={true}
+            variant={this.state.variant}
             submit={this.submit}
             update={this.update}
           />
