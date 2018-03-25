@@ -73,7 +73,7 @@ export default class AddPoolModal extends AsyncModal {
 
 
   isReady() {
-    return !!this.state.url;
+    return !!this.state.url && this.state.user;
   }
 
 

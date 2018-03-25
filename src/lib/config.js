@@ -297,7 +297,8 @@ export const getJSON = (type, options, str = true) => {
     result.pools = options.pools.filter(pool => pool.enabled).map(pool => ({
       url:       pool.url,
       user:      pool.user,
-      pass:      pool.pass
+      pass:      pool.pass,
+      variant:   options.version >= 20500 ? pool.variant : undefined
     }));
   }
   else {

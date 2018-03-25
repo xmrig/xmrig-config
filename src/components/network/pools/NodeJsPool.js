@@ -81,7 +81,9 @@ export default class NodeJsPool extends React.PureComponent {
       url: coin.url,
       user,
       pass,
-      keepalive: true
+      keepalive: true,
+      nicehash:  false,
+      variant:   coin.code === 'GRFT' ? 0 : -1
     };
 
     this.props.update(state);
