@@ -20,7 +20,8 @@ export default class Navbar extends React.PureComponent {
               <span className="icon-bar" />
               <span className="icon-bar" />
             </button>
-            <Link to="/" className="navbar-brand"><Icon icon={['fab', 'monero']} /> XMRig CONFIG</Link>
+            <Link to="/" className="navbar-brand"><img alt="Brand" src="/assets/img/xmrig_logo.svg" width={32} height={32} style={{marginTop:-6}} /></Link>
+            <Link to="/" className="navbar-brand">XMRig CONFIG</Link>
           </div>
           <div id="navbar" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
