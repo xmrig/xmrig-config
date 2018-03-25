@@ -21,6 +21,7 @@ module.exports = {
     publicPath: '/'
   },
 
+  mode: 'development',
   context: path.resolve(__dirname, 'src'),
   devtool: 'inline-source-map',
 
