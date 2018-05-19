@@ -60,7 +60,7 @@ export default class NodeJsPool extends React.PureComponent {
 
 
   build = () => {
-    const coin = getCoin(this.props.coin, this.props.pool);
+    const coin = getCoin(this.props.algo, this.props.coin, this.props.pool);
     if (!coin) {
       return;
     }
@@ -83,7 +83,7 @@ export default class NodeJsPool extends React.PureComponent {
       pass,
       keepalive: true,
       nicehash:  false,
-      variant:   coin.code === 'GRFT' ? 0 : -1
+      variant:   coin.variant
     };
 
     this.props.update(state);

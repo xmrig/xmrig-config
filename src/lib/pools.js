@@ -2,25 +2,32 @@
 
 import find from 'lodash/find';
 
-import POOLS      from '../config/pools';
-import POOLS_AEON from '../config/pools_aeon';
+import POOLS_CN       from '../config/pools_cn';
+import POOLS_CN_LITE  from '../config/pools_cn_lite';
+import POOLS_CN_HEAVY from '../config/pools_cn_heavy';
 
 
-export const getPools = coin => {
-  return (coin === 'AEON' ? POOLS_AEON : POOLS).pools;
+const POOLS = [ POOLS_CN, POOLS_CN_LITE, POOLS_CN_HEAVY ];
+
+console.log(POOLS);
+
+
+export const getPools = algo => {
+  return POOLS[algo].pools;
 };
 
 
-export const getPool = (coin, poolId) => {
-  return (coin === 'AEON' ? POOLS_AEON : POOLS)[poolId];
+export const getPool = (algo, poolId) => {
+  return POOLS[algo][poolId];
 };
 
 
-export const getCoin = (coin, poolId) => {
-  const pool = (coin === 'AEON' ? POOLS_AEON : POOLS)[poolId];
+export const getCoin = (algo, coin, poolId) => {
+  const pool = getPool(algo, poolId);
   if (!pool) {
     return null;
   }
 
-  return find(pool.coins, { code: coin });
+  const c = find(pool.coins, { code: coin });
+  return c === undefined ? pool.coins[0] : c;
 };

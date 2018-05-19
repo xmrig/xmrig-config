@@ -91,7 +91,7 @@ function fromArray(array) {
     const key = keys[i];
     switch (key) {
       case 'pools':
-        result[key] = getPools(array[i + 2], result.kind === KIND_PROXY);
+        result[key] = getPools(array[4], array[i + 2], result.kind === KIND_PROXY);
         continue;
 
       case 'cpuThreads':
@@ -152,13 +152,15 @@ function restoreCUDA(threads) {
 }
 
 
-function getPools(pools, proxy) {
+function getPools(algo, pools, proxy) {
   const result = pools.map(pool => Object.assign({ proxy, name: '' }, array2object(pool, POOL_KEYS)));
 
   for (let pool of result) {
     if (pool.variant === undefined) { // since v2.5
       pool.variant = -1;
     }
+
+    pool.algo = algo;
   }
 
   return result;

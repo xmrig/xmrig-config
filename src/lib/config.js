@@ -197,7 +197,7 @@ export const getCommandLine = (type, options) => {
     array.push(`-u ${pool.user ? pool.user : 'x'}`);
     array.push(`-p ${pool.pass ? pool.pass : 'x'}`);
 
-    if (options.version >= 20500 && pool.variant !== -1) {
+    if (options.version >= 20500 && pool.variant !== -1 && pool.variant != null) {
       array.push(`--variant ${pool.variant}`);
     }
 

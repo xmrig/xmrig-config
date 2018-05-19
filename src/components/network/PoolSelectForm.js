@@ -8,7 +8,7 @@ import {getPool, getPools} from "../../lib/pools";
 
 export default class PoolSelectForm extends Form {
   render() {
-    const pools = getPools(this.props.coin);
+    const pools = getPools(this.props.algo);
 
     return (
       <form className="form-inline">
@@ -25,6 +25,11 @@ export default class PoolSelectForm extends Form {
 
 
   renderCoins() {
+    const pool = getPool(this.props.algo, this.props.pool);
+    if (!pool || !pool.coins) {
+      return;
+    }
+
     if (this.props.coin === 'AEON') {
       return (
         <div className="form-group">
@@ -34,11 +39,6 @@ export default class PoolSelectForm extends Form {
           </select>
         </div>
       );
-    }
-
-    const pool = getPool(this.props.coin, this.props.pool);
-    if (!pool || !pool.coins) {
-      return;
     }
 
     return (

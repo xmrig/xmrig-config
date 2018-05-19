@@ -33,7 +33,8 @@ export default class AddPoolModal extends AsyncModal {
       nicehash:  0,
       ssl:       0,
       pool:      'hv',
-      coin:      props.algo === ALGO_CRYPTONIGHT_LITE ? 'AEON' : 'XMR',
+      coin:      'XMR',
+      algo:      props.algo,
       variant:   -1
     };
   }
@@ -51,6 +52,7 @@ export default class AddPoolModal extends AsyncModal {
           <PoolForm
             pool={this.state.pool}
             coin={this.state.coin}
+            algo={this.state.algo}
             url={this.state.url}
             user={this.state.user}
             pass={this.state.pass}

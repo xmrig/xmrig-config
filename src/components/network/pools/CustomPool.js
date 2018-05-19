@@ -61,7 +61,7 @@ export default class CustomPool extends Form {
 
         <div className="checkbox no-margin-bottom">
           <label>
-            <input type="checkbox" name="nicehash" onChange={this.handleInputChange} checked={this.props.nicehash} /> nicehash/xmrig-proxy
+            <input type="checkbox" name="nicehash" onChange={this.handleInputChange} checked={this.props.nicehash} /> nicehash
           </label>
         </div>
       </div>

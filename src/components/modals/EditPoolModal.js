@@ -37,6 +37,7 @@ export default class EditPoolModal extends AsyncModal {
       ssl:       pool.ssl,
       pool:      pool.pool,
       coin:      pool.coin,
+      algo:      pool.algo,
       variant:   pool.variant
     }
   }
@@ -52,6 +53,7 @@ export default class EditPoolModal extends AsyncModal {
           <PoolForm
             pool={this.state.pool}
             coin={this.state.coin}
+            algo={this.state.algo}
             url={this.state.url}
             user={this.state.user}
             pass={this.state.pass}

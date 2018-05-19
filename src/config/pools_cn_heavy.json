@@ -1,0 +1,35 @@
+{
+  "pools": [
+    {
+      "id": "hv",
+      "name": "Hash Vault"
+    },
+    {
+      "id": "c",
+      "name": "Custom"
+    }
+  ],
+  "hv": {
+    "editor": "nodejs-pool",
+    "coins": [
+      {
+        "code": "SUMO",
+        "name": "Sumokoin (Ryo)",
+        "url": "pool.sumokoin.hashvault.pro:3333"
+      },
+      {
+        "code": "XHV",
+        "name": "Haven Protocol",
+        "url": "pool.haven.hashvault.pro:3333"
+      },
+      {
+        "code": "LOKI",
+        "name": "Loki",
+        "url": "pool.loki.hashvault.pro:3333"
+      }
+    ]
+  },
+  "c": {
+    "editor": "custom"
+  }
+}
