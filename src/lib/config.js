@@ -201,11 +201,11 @@ export const getCommandLine = (type, options) => {
       array.push(`--variant ${pool.variant}`);
     }
 
-    if (!isProxy) {
-      if (pool.keepalive) {
-        array.push('-k');
-      }
+    if (pool.keepalive) {
+      array.push('-k');
+    }
 
+    if (!isProxy) {
       if (pool.nicehash) {
         array.push('--nicehash');
       }
@@ -304,6 +304,7 @@ export const getJSON = (type, options, str = true) => {
       url:       pool.url,
       user:      pool.user,
       pass:      pool.pass,
+      keepalive: !!pool.keepalive,
       variant:   options.version >= 20500 ? pool.variant : undefined
     }));
   }
