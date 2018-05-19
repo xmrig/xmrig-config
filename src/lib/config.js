@@ -3,7 +3,8 @@
 import bs58 from 'bs58';
 import isArray from 'lodash/isArray';
 import {
-  ALGO_CRYPTONIGHT_LITE, KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY, KIND_PROXY, KIND_XMRIG, MODE_AUTO, MODE_MANUAL,
+  ALGO_CRYPTONIGHT, ALGO_CRYPTONIGHT_HEAVY,
+  ALGO_CRYPTONIGHT_LITE, algoName, KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY, KIND_PROXY, KIND_XMRIG, MODE_AUTO, MODE_MANUAL,
   OS_WINDOWS
 } from '../constants/options';
 import products from '../constants/products';
@@ -32,8 +33,13 @@ export const getCommandLine = (type, options) => {
   const array = [];
   array.push(options.os === OS_WINDOWS ? `${product.exe}.exe` : `./${product.exe}`);
 
-  if (options.algo === ALGO_CRYPTONIGHT_LITE) {
-    array.push(isProxy && options.version < 20500 ? '--coin aeon' : '-a cryptonight-lite');
+  if (options.algo !== ALGO_CRYPTONIGHT) {
+    if (isProxy && options.version < 20500 && options.algo !== ALGO_CRYPTONIGHT_HEAVY) {
+      array.push('--coin aeon');
+    }
+    else {
+      array.push(`-a ${algoName(options.algo, options.version)}`);
+    }
   }
 
   if (options.background) {
@@ -218,7 +224,7 @@ export const getJSON = (type, options, str = true) => {
     result.coin = options.algo === ALGO_CRYPTONIGHT_LITE ? 'aeon' : 'xmr';
   }
   else {
-    result.algo = options.algo === ALGO_CRYPTONIGHT_LITE ? 'cryptonight-lite' : 'cryptonight';
+    result.algo = algoName(options.algo, options.version);
   }
 
   result.background      = !!options.background;

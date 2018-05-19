@@ -8,7 +8,14 @@ import Tabs from './Tabs';
 import VersionForm from './start/VersionForm';
 
 import { Link } from 'react-router-dom';
-import { ALGO_CRYPTONIGHT, ALGO_CRYPTONIGHT_LITE, OS_WINDOWS, OS_LINUX, OS_X } from '../constants/options';
+import {
+  ALGO_CRYPTONIGHT,
+  ALGO_CRYPTONIGHT_LITE,
+  OS_WINDOWS,
+  OS_LINUX,
+  OS_X,
+  ALGO_CRYPTONIGHT_HEAVY
+} from '../constants/options';
 
 
 export default class Start extends React.PureComponent {
@@ -26,8 +33,12 @@ export default class Start extends React.PureComponent {
           <h2>Algorithm</h2>
           <div>
             <div className="btn-group">
-              {this.renderAlgoBtn(ALGO_CRYPTONIGHT,      'CryptoNight')}
-              {this.renderAlgoBtn(ALGO_CRYPTONIGHT_LITE, 'CryptoNight-Lite')}
+              {this.renderAlgoBtn(ALGO_CRYPTONIGHT,       'CryptoNight')}
+              {this.renderAlgoBtn(ALGO_CRYPTONIGHT_LITE,  'CryptoNight-Lite')}
+              {this.renderAlgoBtn(ALGO_CRYPTONIGHT_HEAVY, 'CryptoNight-Heavy')}
+            </div>
+            <div>
+              <small className="text-muted">Algorithm variant specified separately for each pool.</small>
             </div>
           </div>
 
@@ -56,7 +67,12 @@ export default class Start extends React.PureComponent {
 
   renderAlgoBtn(algo, component) {
     return (
-      <button onClick={() => this.props.update({ algo })} type="button" className={cn('btn', 'btn-default', { active: this.props.algo === algo })}>
+      <button
+        onClick={() => this.props.update({ algo })}
+        disabled={this.props.version < 20600 && algo === ALGO_CRYPTONIGHT_HEAVY}
+        type="button"
+        className={cn('btn', 'btn-default', { active: this.props.algo === algo })}
+      >
         {component}
       </button>
     );

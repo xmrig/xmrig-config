@@ -8,6 +8,7 @@ export default class VersionForm extends React.PureComponent {
     return (
       <form className="form-inline">
         <select className="form-control" value={this.props.version} name="version" onChange={this.handleInputChange}>
+          <option value={20600}>2.6.x</option>
           <option value={20500}>2.5.x</option>
           <option value={20400}>2.4.x</option>
         </select>
