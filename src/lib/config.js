@@ -9,6 +9,7 @@ import {
 } from '../constants/options';
 import products from '../constants/products';
 import v1 from './serialization/v1';
+import sortObject from "./sortObject";
 
 
 function escape(str) {
@@ -329,7 +330,7 @@ export const getJSON = (type, options, str = true) => {
     ['worker-id']:    options.apiId ? options.apiId : null
   };
 
-  return str === true ? JSON.stringify(result, null, 4) : result;
+  return str === true ? JSON.stringify(sortObject(result), null, 4) : result;
 };
 
 
