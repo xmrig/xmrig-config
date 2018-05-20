@@ -83,6 +83,14 @@ export const getCommandLine = (type, options) => {
 
     strOption(array, '--api-worker-id', options.apiId);
     strOption(array, '--api-access-token', options.apiToken);
+
+    if (options.apiIPv6) {
+      array.push('--api-ipv6');
+    }
+
+    if (options.apiToken && options.apiFull) {
+      array.push('--api-no-restricted');
+    }
   }
 
   if (isProxy) {
@@ -327,7 +335,9 @@ export const getJSON = (type, options, str = true) => {
   result.api = {
     port:             +options.apiPort,
     ['access-token']: options.apiToken ? options.apiToken : null,
-    ['worker-id']:    options.apiId ? options.apiId : null
+    ['worker-id']:    options.apiId ? options.apiId : null,
+    ipv6:             !!options.apiIPv6,
+    restricted:       !options.apiFull
   };
 
   return str === true ? JSON.stringify(sortObject(result), null, 4) : result;

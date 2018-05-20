@@ -27,9 +27,12 @@ export default class Network extends React.PureComponent {
 
           <h2>HTTP API</h2>
           <ApiForm
+            version={this.props.version}
             apiPort={this.props.apiPort}
             apiToken={this.props.apiToken || ''}
             apiId={this.props.apiId || ''}
+            apiIPv6={+this.props.apiIPv6}
+            apiFull={+this.props.apiFull}
             update={this.props.update}
           />
 

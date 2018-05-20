@@ -25,6 +25,21 @@ export default class ApiForm extends Form {
 
         </div>
 
+        {this.renderOptions()}
+        {this.renderExtra()}
+
+      </form>
+    );
+  }
+
+
+  renderOptions() {
+    if (this.props.apiPort === 0) {
+      return;
+    }
+
+    return (
+      <div>
         <div className="form-group">
           <label htmlFor="apiId">Worker name</label>
 
@@ -56,8 +71,41 @@ export default class ApiForm extends Form {
           />
 
         </div>
+      </div>
+    );
+  }
 
-      </form>
+
+  renderExtra() {
+    if (this.props.apiPort === 0 || this.props.version < 20600) {
+      return;
+    }
+
+    return (
+      <div>
+        <div className="checkbox">
+          <label>
+            <input
+              name="apiFull"
+              checked={this.props.apiToken && this.props.apiFull}
+              onChange={this.handleInputChange}
+              disabled={!this.props.apiToken}
+              type="checkbox"
+            /> Enable full remote access
+          </label>
+        </div>
+
+        <div className="checkbox">
+          <label>
+            <input
+              name="apiIPv6"
+              checked={this.props.apiIPv6}
+              onChange={this.handleInputChange}
+              type="checkbox"
+            /> Enable IPv6
+          </label>
+        </div>
+      </div>
     );
   }
 }

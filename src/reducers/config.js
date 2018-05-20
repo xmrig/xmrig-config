@@ -32,6 +32,8 @@ const INITIAL_STATE = {
     apiPort:     0,
     apiToken:    null,
     apiId:       null,
+    apiIPv6:     0,
+    apiFull:     0,
   },
   [KIND_PROXY]: {
     version:    20600,
@@ -52,7 +54,9 @@ const INITIAL_STATE = {
     apiPort:    0,
     apiToken:   null,
     apiId:      null,
-    bind:       '0.0.0.0:3333'
+    bind:       '0.0.0.0:3333',
+    apiIPv6:    0,
+    apiFull:    0,
   },
   [KIND_AMD_LEGACY]: {
     version:     20600,
@@ -75,6 +79,8 @@ const INITIAL_STATE = {
     apiPort:     0,
     apiToken:    null,
     apiId:       null,
+    apiIPv6:     0,
+    apiFull:     0,
   },
   [KIND_NVIDIA_LEGACY]: {
     version:     20600,
@@ -97,6 +103,8 @@ const INITIAL_STATE = {
     apiPort:     0,
     apiToken:    null,
     apiId:       null,
+    apiIPv6:     0,
+    apiFull:     0,
   }
 };
 
