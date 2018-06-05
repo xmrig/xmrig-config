@@ -63,6 +63,12 @@
         "name": "Dero",
         "url": "pool.dero.hashvault.pro:3333",
         "variant": 1
+      },
+      {
+        "code": "SUMO",
+        "name": "Sumokoin",
+        "url": "pool.sumo.hashvault.pro:3333",
+        "variant": 0
       }
     ]
   },

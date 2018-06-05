@@ -13,9 +13,9 @@
     "editor": "nodejs-pool",
     "coins": [
       {
-        "code": "SUMO",
-        "name": "Sumokoin (Ryo)",
-        "url": "pool.sumokoin.hashvault.pro:3333"
+        "code": "Ryo",
+        "name": "Ryo",
+        "url": "pool.ryo.hashvault.pro:3333"
       },
       {
         "code": "XHV",
