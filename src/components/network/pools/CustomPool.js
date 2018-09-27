@@ -2,6 +2,7 @@
 
 import React from 'react';
 import cn from 'classnames';
+import Icon from '@fortawesome/react-fontawesome';
 import Form from "../../Form";
 import {ALGO_CRYPTONIGHT, ALGO_CRYPTONIGHT_HEAVY, ALGO_CRYPTONIGHT_LITE} from "../../../constants/options";
 
@@ -69,13 +70,9 @@ export default class CustomPool extends Form {
 
 
   renderVariant() {
-    if (this.props.algo === ALGO_CRYPTONIGHT_HEAVY) {
-      return;
-    }
-
     return (
       <div className="form-group">
-        <label htmlFor="password">PoW variant</label>
+        <label htmlFor="password">Algorithm <a href="https://github.com/xmrig/xmrig-proxy/blob/dev/doc/STRATUM_EXT.md#14-algorithm-names-and-variants" target="_blank">variant <Icon icon="question-circle" /></a></label>
         {this.renderVariantSelect()}
       </div>
     );
@@ -86,10 +83,14 @@ export default class CustomPool extends Form {
     if (this.props.algo === ALGO_CRYPTONIGHT) {
       return (
         <select className="form-control" value={this.props.variant} name="variant" onChange={this.handleVariantChange} style={{maxWidth: 300}}>
-          <option value={-1}>variant -1 (Monero)</option>
-          <option value={1}>variant 1 (CryptoNightV7)</option>
-          <option value={0}>variant 0 (Old CryptoNight)</option>
-          <option value={"xtl"}>variant xtl (Stellite)</option>
+          <option value={-1}>Monero/Automatic</option>
+          <option value={2}>2</option>
+          <option value={1}>1</option>
+          <option value={0}>0</option>
+          <option value={"xtl"}>Stellite</option>
+          <option value={"msr"}>Masari</option>
+          <option value={"xao"}>Alloy</option>
+          <option value={"rto"}>Arto</option>
         </select>
       );
     }
@@ -97,10 +98,18 @@ export default class CustomPool extends Form {
     if (this.props.algo === ALGO_CRYPTONIGHT_LITE) {
       return (
         <select className="form-control" value={this.props.variant} name="variant" onChange={this.handleVariantChange} style={{maxWidth: 300}}>
-          <option value={-1}>variant -1 (Aeon)</option>
-          <option value={1}>variant 1 (CryptoNightLiteV7)</option>
-          <option value={0}>variant 0 (Old CryptoNightLite)</option>
-          <option value={"ipbc"}>variant ipbc (IPBC)</option>
+          <option value={1}>1</option>
+          <option value={0}>0</option>
+        </select>
+      );
+    }
+
+    if (this.props.algo === ALGO_CRYPTONIGHT_HEAVY) {
+      return (
+        <select className="form-control" value={this.props.variant} name="variant" onChange={this.handleVariantChange} style={{maxWidth: 300}}>
+          <option value={0}>0</option>
+          <option value={"xhv"}>Haven Protocol</option>
+          <option value={"tube"}>BitTube</option>
         </select>
       );
     }

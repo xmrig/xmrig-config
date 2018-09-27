@@ -20,7 +20,7 @@
         "code": "XMR",
         "name": "Monero",
         "url": "pool.monero.hashvault.pro:3333",
-        "variant": 1
+        "variant": -1
       },
       {
         "code": "XRB",
@@ -56,7 +56,7 @@
         "code": "MSR",
         "name": "Masari",
         "url": "pool.masari.hashvault.pro:3333",
-        "variant": 1
+        "variant": "msr"
       },
       {
         "code": "DERO",
@@ -79,7 +79,7 @@
         "code": "XMR",
         "name": "Monero",
         "url": "pool.supportxmr.com:5555",
-        "variant": 1
+        "variant": -1
       }
     ]
   },

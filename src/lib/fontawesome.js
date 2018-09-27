@@ -23,7 +23,9 @@ import faSave from '@fortawesome/fontawesome-free-solid/faSave';
 import faSlidersH from '@fortawesome/fontawesome-free-solid/faSlidersH';
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
+import faQuestionCircle from '@fortawesome/fontawesome-free-solid/faQuestionCircle';
 
 fontawesome.library.add(faGithub, faMonero, faWindows, faLinux, faApple, faFlag, faPlug, faMicrochip, faCog,
                         faFlagCheckered, faCopy, faPencilAlt, faTrashAlt, faPlus, faEllipsisV, faTimes, faTimesCircle,
-                        faExclamationTriangle, faDownload, faShareAlt, faSave, faSlidersH, faCheck, faCheckCircle);
+                        faExclamationTriangle, faDownload, faShareAlt, faSave, faSlidersH, faCheck, faCheckCircle,
+                        faQuestionCircle);

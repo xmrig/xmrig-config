@@ -312,7 +312,7 @@ export const getJSON = (type, options, str = true) => {
     result.pools = options.pools.filter(pool => pool.enabled).map(pool => ({
       url:       pool.url,
       user:      pool.user,
-      pass:      pool.pass,
+      pass:      pool.pass || 'x',
       keepalive: !!pool.keepalive,
       variant:   options.version >= 20500 ? pool.variant : undefined
     }));
@@ -321,7 +321,7 @@ export const getJSON = (type, options, str = true) => {
     result.pools = options.pools.filter(pool => pool.enabled).map(pool => ({
       url:       pool.url,
       user:      pool.user,
-      pass:      pool.pass,
+      pass:      pool.pass || 'x',
       keepalive: !!pool.keepalive,
       nicehash:  !!pool.nicehash,
       variant:   options.version >= 20500 ? pool.variant : undefined
