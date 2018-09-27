@@ -7,7 +7,7 @@ import {
 
 const MINER_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","cpuThreads","oclThreads","cudaThreads","printTime","apiIPv6","apiFull"];
 const PROXY_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","accessLog","verbose","bind","apiIPv6","apiFull"];
-const POOL_KEYS  = ["id","url","user","pass","enabled","keepalive","nicehash","ssl","pool","coin","variant"];
+const POOL_KEYS  = ["id","url","user","pass","enabled","keepalive","nicehash","ssl","pool","coin","variant","tls"];
 const OCL_KEYS   = ["index","intensity","worksize","affine_to_cpu"];
 const CUDA_KEYS  = ["index","threads","blocks","bfactor","bsleep","affine_to_cpu"];
 const KINDS      = [KIND_XMRIG, KIND_PROXY, KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY];
@@ -158,6 +158,10 @@ function getPools(algo, pools, proxy) {
   for (let pool of result) {
     if (pool.variant === undefined) { // since v2.5
       pool.variant = -1;
+    }
+
+    if (pool.tls === undefined) { // since v2.8
+      pool.tls = 0;
     }
 
     pool.algo = algo;

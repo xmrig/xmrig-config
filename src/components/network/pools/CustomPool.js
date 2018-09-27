@@ -15,7 +15,15 @@ export default class CustomPool extends Form {
         <div className="form-group">
           <label htmlFor="url">URL of mining server</label>
           <div className="input-group">
-            <span className="input-group-addon">stratum+tcp://</span>
+            <div className="input-group-btn">
+              <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" style={{borderRight: 0}}>
+                stratum+{ this.props.tls ? 'ssl' : 'tcp' }:// <span className="caret" />
+              </button>
+              <ul className="dropdown-menu">
+                <li><a href="#" onClick={event => { event.preventDefault(); this.props.update({ tls: 0 }); }}>stratum+<b>tcp</b>://</a></li>
+                <li><a href="#" onClick={event => { event.preventDefault(); this.props.update({ tls: 1 }); }}>stratum+<b>ssl</b>://</a></li>
+              </ul>
+            </div>
             <input type="text" className="form-control autofocus" id="url" name="url" onChange={this.handleInputChange} value={this.props.url} />
           </div>
         </div>
@@ -118,7 +126,7 @@ export default class CustomPool extends Form {
 
   handleVariantChange = event => {
     let variant = event.target.value;
-    if (variant === '-1' || variant === '0' || variant === '1') {
+    if (variant === '-1' || variant === '0' || variant === '1' || variant === '2') {
       variant = +variant;
     }
 

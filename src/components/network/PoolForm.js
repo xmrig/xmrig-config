@@ -37,6 +37,7 @@ export default class PoolForm extends Form {
                       pass={this.props.pass}
                       keepalive={this.props.keepalive}
                       nicehash={this.props.nicehash}
+                      tls={this.props.tls}
                       isProxy={this.props.isProxy}
                       variant={this.props.variant}
                       submit={this.props.submit}

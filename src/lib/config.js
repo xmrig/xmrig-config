@@ -214,6 +214,10 @@ export const getCommandLine = (type, options) => {
       array.push('-k');
     }
 
+    if (options.version >= 20800 && pool.tls) {
+      array.push('--tls');
+    }
+
     if (!isProxy) {
       if (pool.nicehash) {
         array.push('--nicehash');
@@ -310,21 +314,25 @@ export const getJSON = (type, options, str = true) => {
 
   if (isProxy) {
     result.pools = options.pools.filter(pool => pool.enabled).map(pool => ({
-      url:       pool.url,
-      user:      pool.user,
-      pass:      pool.pass || 'x',
-      keepalive: !!pool.keepalive,
-      variant:   options.version >= 20500 ? pool.variant : undefined
+      url:               pool.url,
+      user:              pool.user,
+      pass:              pool.pass || 'x',
+      keepalive:         !!pool.keepalive,
+      variant:           options.version >= 20500 ? pool.variant : undefined,
+      tls:               options.version >= 20800 ? !!pool.tls : undefined,
+      'tls-fingerprint': options.version >= 20800 ? null : undefined,
     }));
   }
   else {
     result.pools = options.pools.filter(pool => pool.enabled).map(pool => ({
-      url:       pool.url,
-      user:      pool.user,
-      pass:      pool.pass || 'x',
-      keepalive: !!pool.keepalive,
-      nicehash:  !!pool.nicehash,
-      variant:   options.version >= 20500 ? pool.variant : undefined
+      url:               pool.url,
+      user:              pool.user,
+      pass:              pool.pass || 'x',
+      keepalive:         !!pool.keepalive,
+      nicehash:          !!pool.nicehash,
+      variant:           options.version >= 20500 ? pool.variant : undefined,
+      tls:               options.version >= 20800 ? !!pool.tls : undefined,
+      'tls-fingerprint': options.version >= 20800 ? null : undefined,
     }));
   }
 
