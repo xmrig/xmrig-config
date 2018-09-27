@@ -259,20 +259,20 @@ export const getJSON = (type, options, str = true) => {
   if (type === KIND_XMRIG) {
     const { cpuThreads } = options;
 
+    result.av                = cpuThreads.av;
+    result['max-cpu-usage']  = cpuThreads.max;
+    result['cpu-priority']   = cpuThreads.priority === 2 ? null : cpuThreads.priority;
+    result['huge-pages']     = cpuThreads.noPages === 0;
+
     if (cpuThreads.mode === MODE_AUTO) {
-      result.av               = cpuThreads.av;
-      result.safe             = cpuThreads.av > 0;
-      result['max-cpu-usage'] = cpuThreads.max;
-      result['cpu-priority']  = cpuThreads.priority === 2 ? null : cpuThreads.priority;
-      result.threads          = null;
+      result.safe            = cpuThreads.av > 0;
+      result.threads         = null;
+      result['cpu-affinity'] = null;
     }
     else if (cpuThreads.mode === MODE_MANUAL) {
-      result.av               = cpuThreads.av;
-      result.safe             = !!cpuThreads.safe;
-      result['cpu-priority']  = cpuThreads.priority === 2 ? null : cpuThreads.priority;
-      result['cpu-affinity']  = cpuThreads.affinity ? cpuThreads.affinity : null;
-      result['huge-pages']    = cpuThreads.noPages === 1 ? false : undefined;
-      result.threads          = cpuThreads.count;
+      result.safe            = !!cpuThreads.safe;
+      result.threads         = cpuThreads.count;
+      result['cpu-affinity'] = cpuThreads.affinity ? cpuThreads.affinity : null;
     }
   }
 
