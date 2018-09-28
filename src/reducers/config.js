@@ -72,7 +72,7 @@ const INITIAL_STATE = {
     syslog:      0,
     logFile:     null,
     cpuThreads:  { mode: MODE_UNAVAILABLE },
-    oclThreads:  { mode: MODE_AUTO, platform: 0, threads: [] },
+    oclThreads:  { mode: MODE_AUTO, platform: 'AMD', threads: [] },
     cudaThreads: { mode: MODE_UNAVAILABLE },
     pools:       [],
     printTime:   60,

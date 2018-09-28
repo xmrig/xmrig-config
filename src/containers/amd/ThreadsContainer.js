@@ -9,12 +9,13 @@ import {update} from "../../actions/config";
 const KIND = KIND_AMD_LEGACY;
 
 
-const ThreadsContainer = ({ oclThreads, update, dispatch }) => (
-  <Threads type={KIND} oclThreads={oclThreads} update={update} dispatch={dispatch} />
+const ThreadsContainer = ({ version, oclThreads, update, dispatch }) => (
+  <Threads type={KIND} version={version} oclThreads={oclThreads} update={update} dispatch={dispatch} />
 );
 
 
 const mapStateToProps = state => ({
+  version:    state.config[KIND].version,
   oclThreads: state.config[KIND].oclThreads,
 });
 

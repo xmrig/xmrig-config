@@ -56,6 +56,7 @@ export default class Threads extends React.PureComponent {
     if (oclThreads && oclThreads.mode !== MODE_UNAVAILABLE) {
       return <OclThreads
         mode={oclThreads.mode}
+        version={this.props.version}
         platform={oclThreads.platform}
         threads={oclThreads.threads}
         update={this.props.update}

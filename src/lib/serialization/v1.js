@@ -61,7 +61,7 @@ function saveOCL(threads) {
   }
 
   if (threads.mode === MODE_AUTO) {
-    return [ MODE_AUTO ];
+    return [ MODE_AUTO, threads.platform ];
   }
 
   return [ threads.mode, threads.platform, threads.threads.map(thread => OCL_KEYS.map(key => thread[key])) ];
@@ -132,7 +132,7 @@ function restoreOCL(threads) {
   }
 
   if (threads[0] === MODE_AUTO) {
-    return { mode: MODE_AUTO, platform: 0, threads: []};
+    return { mode: MODE_AUTO, platform: threads[1] || 0, threads: []};
   }
 
   return { mode: threads[0], platform: threads[1], threads: threads[2].map(thread => array2object(thread, OCL_KEYS)) };

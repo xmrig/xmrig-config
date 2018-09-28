@@ -36,7 +36,7 @@ export default class Result extends React.PureComponent {
             Command line <ClipboardButton button-title="Copy" className="btn btn-success" data-clipboard-target="#cmd" onSuccess={this.onCopied}><span><Icon icon="copy" /></span></ClipboardButton>
           </h2>
           <pre id="cmd">{getCommandLine(type, this.props.config)}</pre>
-          {/*<pre>{JSON.stringify(serialize(type, this.props.config, false))}</pre>*/}
+          <pre>{JSON.stringify(serialize(type, this.props.config, false))}</pre>
 
           <h4 className="text-muted text-or"><span>OR</span></h4>
 

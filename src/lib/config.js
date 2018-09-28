@@ -143,22 +143,28 @@ export const getCommandLine = (type, options) => {
     }
   }
 
-  if (type === KIND_AMD_LEGACY && options.oclThreads.mode === MODE_MANUAL) {
+  if (type === KIND_AMD_LEGACY) {
     const { oclThreads } = options;
 
-    array.push(`--opencl-platform ${oclThreads.platform}`);
+    if (oclThreads.mode === MODE_MANUAL) {
+      array.push(`--opencl-platform ${oclThreads.platform}`);
 
-    if (oclThreads.threads && oclThreads.threads.length) {
-      array.push('--opencl-devices');
-      array.push(oclThreads.threads.map(thread => thread.index).join(','));
-      array.push('--opencl-launch');
-      array.push(oclThreads.threads.map(thread => thread.intensity + 'x' + thread.worksize).join(','));
+      if (oclThreads.threads && oclThreads.threads.length) {
+        array.push('--opencl-devices');
+        array.push(oclThreads.threads.map(thread => thread.index).join(','));
+        array.push('--opencl-launch');
+        array.push(oclThreads.threads.map(thread => thread.intensity + 'x' + thread.worksize).join(','));
 
-      const affinity = oclThreads.threads.filter(thread => thread.affine_to_cpu !== false);
-      if (affinity.length) {
-        array.push('--opencl-affinity');
-        array.push(oclThreads.threads.map(thread => thread.affine_to_cpu === false ? -1 : thread.affine_to_cpu).join(','));
+        const affinity = oclThreads.threads.filter(thread => thread.affine_to_cpu !== false);
+        if (affinity.length) {
+          array.push('--opencl-affinity');
+          array.push(oclThreads.threads.map(thread => thread.affine_to_cpu === false ? -1 : thread.affine_to_cpu).join(','));
+        }
       }
+    }
+
+    if (oclThreads.mode === MODE_AUTO && options.version >= 20800 && oclThreads.platform !== 'AMD') {
+      array.push(`--opencl-platform ${oclThreads.platform}`);
     }
   }
 
