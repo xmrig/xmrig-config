@@ -8,7 +8,7 @@ import {
 const MINER_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","cpuThreads","oclThreads","cudaThreads","printTime","apiIPv6","apiFull"];
 const PROXY_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","accessLog","verbose","bind","apiIPv6","apiFull"];
 const POOL_KEYS  = ["id","url","user","pass","enabled","keepalive","nicehash","ssl","pool","coin","variant","tls"];
-const OCL_KEYS   = ["index","intensity","worksize","affine_to_cpu"];
+const OCL_KEYS   = ["index","intensity","worksize","affine_to_cpu","strided_index","mem_chunk","unroll"];
 const CUDA_KEYS  = ["index","threads","blocks","bfactor","bsleep","affine_to_cpu"];
 const KINDS      = [KIND_XMRIG, KIND_PROXY, KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY];
 
@@ -126,16 +126,21 @@ function restoreCPU(threads) {
 }
 
 
-function restoreOCL(threads) {
-  if (threads === 0) {
+function restoreOCL(array) {
+  if (array === 0) {
     return { mode: MODE_UNAVAILABLE };
   }
 
-  if (threads[0] === MODE_AUTO) {
-    return { mode: MODE_AUTO, platform: threads[1] || 0, threads: []};
+  if (array[0] === MODE_AUTO) {
+    return { mode: MODE_AUTO, platform: array[1] || 0, threads: []};
   }
 
-  return { mode: threads[0], platform: threads[1], threads: threads[2].map(thread => array2object(thread, OCL_KEYS)) };
+  const threads = array[2].map(thread => array2object(thread, OCL_KEYS));
+  for (let i = 0; i < threads.length; i++) {
+    threads[i].comp_mode = true;
+  }
+
+  return { mode: array[0], platform: array[1], threads };
 }
 
 

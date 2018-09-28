@@ -1,6 +1,7 @@
 'use strict';
 
 import bs58 from 'bs58';
+import isUndefined from 'lodash/isUndefined';
 import isArray from 'lodash/isArray';
 import {
   ALGO_CRYPTONIGHT, ALGO_CRYPTONIGHT_HEAVY,
@@ -159,6 +160,17 @@ export const getCommandLine = (type, options) => {
         if (affinity.length) {
           array.push('--opencl-affinity');
           array.push(oclThreads.threads.map(thread => thread.affine_to_cpu === false ? -1 : thread.affine_to_cpu).join(','));
+        }
+
+        if (options.version >= 20800) {
+          array.push('--opencl-strided-index');
+          array.push(oclThreads.threads.map(thread => thread.strided_index || (oclThreads.platform === 'NVIDIA' ? 0 : 2)).join(','));
+
+          array.push('--opencl-mem-chunk');
+          array.push(oclThreads.threads.map(thread => thread.mem_chunk || 2).join(','));
+
+          array.push('--opencl-unroll');
+          array.push(oclThreads.threads.map(thread => isUndefined(thread.unroll) ? 8 : thread.unroll).join(','));
         }
       }
     }

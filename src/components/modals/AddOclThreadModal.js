@@ -10,8 +10,8 @@ import OclThreadForm from "../threads/OclThreadForm";
 
 
 export default class AddOclThreadModal extends AsyncModal {
-  static show(dispatch) {
-    return showAsync(MODAL_ADD_OCL_THREAD, {}, dispatch)
+  static show(props, dispatch) {
+    return showAsync(MODAL_ADD_OCL_THREAD, props, dispatch)
   }
 
   constructor(props) {
@@ -22,6 +22,9 @@ export default class AddOclThreadModal extends AsyncModal {
       intensity:     1000,
       worksize:      8,
       affine_to_cpu: false,
+      strided_index: props.platform === 'NVIDIA' ? 0 : 2,
+      mem_chunk:     2,
+      unroll:        8
     };
   }
 
@@ -38,6 +41,10 @@ export default class AddOclThreadModal extends AsyncModal {
             intensity={this.state.intensity}
             worksize={this.state.worksize}
             affine_to_cpu={this.state.affine_to_cpu}
+            platform={this.props.platform}
+            strided_index={this.state.strided_index}
+            mem_chunk={this.state.mem_chunk}
+            unroll={this.state.unroll}
             update={this.update}
             submit={this.submit}
           />

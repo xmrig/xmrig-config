@@ -14,6 +14,9 @@ export default class OclThreadRow extends React.PureComponent {
         <td className="text-right">{thread.index}</td>
         <td className="text-right">{thread.intensity}</td>
         <td className="text-right">{thread.worksize}</td>
+        <td className="text-right">{thread.strided_index}</td>
+        <td className="text-right">{thread.mem_chunk}</td>
+        <td className="text-right">{thread.unroll}</td>
         <td className="text-right text-muted">{thread.affine_to_cpu === false ? 'none' : thread.affine_to_cpu}</td>
         <td>
           <div className="pull-right btn-group">

@@ -124,6 +124,9 @@ export default class OclThreads extends React.Component {
               <th>index</th>
               <th>intensity</th>
               <th>worksize</th>
+              <th>strided_index</th>
+              <th>mem_chunk</th>
+              <th>unroll</th>
               <th>affinity</th>
               <th style={{width: 100 + '%'}} />
             </tr>
@@ -143,7 +146,9 @@ export default class OclThreads extends React.Component {
 
 
   addThread = () => {
-    AddOclThreadModal.show(this.props.dispatch)
+    const { platform } = this.state;
+
+    AddOclThreadModal.show({ platform }, this.props.dispatch)
       .then(thread => {
         this.setState({ threads: update(this.state.threads, {$push: [thread]})}, this.save);
       })
@@ -152,7 +157,9 @@ export default class OclThreads extends React.Component {
 
 
   editThread = index => {
-    EditOclThreadModal.show(index, this.state.threads[index], this.props.dispatch)
+    const { platform } = this.state;
+
+    EditOclThreadModal.show({ index, thread: this.state.threads[index], platform }, this.props.dispatch)
       .then(result => {
         this.setState({ threads: update(this.state.threads, {$splice: [[result.index, 1, result.thread]]}) }, this.save);
       })
