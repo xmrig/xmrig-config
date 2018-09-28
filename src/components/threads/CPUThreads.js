@@ -22,7 +22,7 @@ export default class CPUThreads extends React.Component {
             <label htmlFor="cpuMode">Mode</label>{' '}
             <select className="form-control" value={this.state.mode} id="cpuMode" name="cpuMode" onChange={this.handleModeChange}>
               <option value={MODE_AUTO}>Automatic</option>
-              <option value={MODE_MANUAL}>Manual</option>
+              <option value={MODE_MANUAL}>Simple</option>
             </select>
           </div>
         </form>
