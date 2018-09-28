@@ -1,8 +1,8 @@
 'use strict';
 
 import React from 'react';
+import Icon from "@fortawesome/react-fontawesome";
 import Form from "../Form";
-import {MODE_AUTO, MODE_MANUAL} from "../../constants/options";
 
 
 export default class OclThreadForm extends Form {
@@ -12,7 +12,18 @@ export default class OclThreadForm extends Form {
 
         <div className="form-group">
 
-          {this.renderField('index', 0, 'GPU index')}
+          <label htmlFor="oclIndex" className="col-sm-3 control-label">GPU <a href="https://github.com/xmrig/xmrig-amd/blob/master/doc/THREADS.md#gpu-threads-configuration" target="_blank">index <Icon icon="question-circle" /></a></label>
+          <div className="col-sm-3">
+            <input
+              type="number"
+              className="form-control"
+              id="oclIndex"
+              name="index"
+              value={this.props.index}
+              min={0}
+              onChange={this.handleInputChange}
+            />
+          </div>
 
           <label htmlFor="oclAffinity" className="col-sm-3 control-label">CPU affinity</label>
           <div className="col-sm-3">
