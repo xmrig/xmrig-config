@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {ALGO_CRYPTONIGHT_LITE} from "../../constants/options";
+import memSize from "../../lib/memSize";
 
 
 export default class CPUAutoForm extends React.PureComponent {
@@ -85,7 +86,7 @@ export default class CPUAutoForm extends React.PureComponent {
       return;
     }
 
-    const size = CPUAutoForm.multiway(this.props.av) * (this.props.algo === ALGO_CRYPTONIGHT_LITE ? 1 : 2);
+    const size = memSize(CPUAutoForm.multiway(this.props.av), this.props.algo);
 
     return <div style={{marginBottom: 5}} className="help-block"><b>{size} MB</b> CPU cache required per thread</div>;
   }

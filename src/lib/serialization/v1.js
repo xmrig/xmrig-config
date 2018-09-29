@@ -55,8 +55,6 @@ function saveCPU(threads) {
     return 0;
   }
 
-  console.log('>>>>>>>>>>>>>>>>>>>>>', threads.aes);
-
   return [ threads.mode, threads.count, threads.av, threads.max, threads.priority, threads.safe, threads.affinity, threads.noPages, (threads.threads || []).map(thread => CPU_KEYS.map(key => thread[key])), threads.aes ];
 }
 

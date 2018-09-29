@@ -86,13 +86,14 @@ export default class CPUThreads extends React.Component {
               <tr>
                 <th>#</th>
                 <th>low_power_mode</th>
+                <th>memory</th>
                 <th>asm</th>
                 <th>affine_to_cpu</th>
                 <th style={{width: 100 + '%'}} />
               </tr>
             </thead>
             <tbody>
-              {this.state.threads.map((thread, index) => <CpuThreadRow key={index} index={index} thread={thread} edit={this.editThread} remove={this.removeThread} />)}
+              {this.state.threads.map((thread, index) => <CpuThreadRow key={index} index={index} thread={thread} algo={this.props.algo} edit={this.editThread} remove={this.removeThread} />)}
             </tbody>
           </table>
         </div>
