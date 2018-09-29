@@ -24,6 +24,8 @@ import sortObject from "./sortObject";
 
 const CPU_LOW_POWER_MODE = [ false, true, 3, 4, 5];
 const CPU_ASM            = [ false, true, 'intel', 'ryzen'];
+const PROXY_WORKERS_CMD  = [ 'none', 'rig_id', 'user', 'password', 'agent', 'ip'];
+const PROXY_WORKERS      = [ false, true, 'user', 'password', 'agent', 'ip'];
 
 
 function escape(str) {
@@ -111,6 +113,18 @@ export const getCommandLine = (type, options) => {
     const bind = options.bind.split('\n').filter(bind => !!bind);
     for (let addr of bind) {
       array.push(`-b ${addr}`);
+    }
+
+    if (options.mode === 1) {
+      array.push(`-m simple`);
+    }
+
+    if (options.version >= 20800 && options.workers !== 1) {
+      array.push(`--workers ${PROXY_WORKERS_CMD[options.workers]}`);
+    }
+
+    if (options.diff >= 100) {
+      array.push(`--custom-diff ${options.diff}`);
     }
   }
 
@@ -378,7 +392,13 @@ export const getJSON = (type, options, str = true) => {
   }
 
   if (isProxy) {
-    result.bind = options.bind.split('\n').filter(bind => !!bind);
+    result.bind    = options.bind.split('\n').filter(bind => !!bind);
+    result.mode    = options.mode === 1 ? 'simple' : 'nicehash';
+    result.workers = PROXY_WORKERS[options.workers];
+
+    if (options.diff >= 100) {
+      result['custom-diff'] = options.diff;
+    }
   }
 
   result.api = {

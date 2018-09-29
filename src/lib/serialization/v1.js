@@ -9,7 +9,7 @@ import {
 } from "../../constants/options";
 
 const MINER_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","cpuThreads","oclThreads","cudaThreads","printTime","apiIPv6","apiFull"];
-const PROXY_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","accessLog","verbose","bind","apiIPv6","apiFull"];
+const PROXY_KEYS = ["version","name","algo","os","background","colors","retries","retryPause","donate","syslog","logFile","pools","apiPort","apiToken","apiId","accessLog","verbose","bind","apiIPv6","apiFull","mode","workers","diff"];
 const POOL_KEYS  = ["id","url","user","pass","enabled","keepalive","nicehash","ssl","pool","coin","variant","tls"];
 const OCL_KEYS   = ["index","intensity","worksize","affine_to_cpu","strided_index","mem_chunk","unroll"];
 const CUDA_KEYS  = ["index","threads","blocks","bfactor","bsleep","affine_to_cpu"];
@@ -115,6 +115,20 @@ function fromArray(array) {
     }
 
     result[key] = array[i + 2];
+  }
+
+  if (result.kind === KIND_PROXY) {
+    if (!isNumber(result.mode)) {
+      result.mode = 0;
+    }
+
+    if (!isNumber(result.workers)) {
+      result.workers = 1;
+    }
+
+    if (!isNumber(result.diff)) {
+      result.diff = 0;
+    }
   }
 
   return result;

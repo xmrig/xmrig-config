@@ -57,6 +57,9 @@ const INITIAL_STATE = {
     bind:       '0.0.0.0:3333',
     apiIPv6:    0,
     apiFull:    0,
+    mode:       0,
+    workers:    1,
+    diff:       0,
   },
   [KIND_AMD_LEGACY]: {
     version:     20800,

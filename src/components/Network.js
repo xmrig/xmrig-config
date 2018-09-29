@@ -8,7 +8,7 @@ import Tabs from './Tabs';
 import ApiForm from './network/ApiForm';
 import PoolRow from './network/PoolRow';
 import {KIND_PROXY} from "../constants/options";
-import BindForm from "./network/BindForm";
+import ProxyForm from "./network/ProxyForm";
 
 
 export default class Network extends React.PureComponent {
@@ -23,7 +23,7 @@ export default class Network extends React.PureComponent {
 
           <h2>Pools <button className="btn btn-success" onClick={this.add}><Icon icon="plus" /> Add</button></h2>
           {this.renderPools()}
-          {this.renderBind()}
+          {this.renderProxy()}
 
           <h2>HTTP API</h2>
           <ApiForm
@@ -62,15 +62,21 @@ export default class Network extends React.PureComponent {
   }
 
 
-  renderBind() {
+  renderProxy() {
     if (this.props.type !== KIND_PROXY) {
       return;
     }
 
     return (
       <div>
-        <h2>Bind</h2>
-        <BindForm bind={this.props.bind} update={this.props.update} />
+        <h2>Proxy</h2>
+        <ProxyForm
+          bind={this.props.bind}
+          mode={this.props.mode}
+          workers={this.props.workers}
+          diff={this.props.diff}
+          update={this.props.update}
+        />
       </div>
     );
   }

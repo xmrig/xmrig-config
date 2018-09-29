@@ -13,7 +13,7 @@ import DeletePoolModal from "../../components/modals/DeletePoolModal";
 const KIND = KIND_PROXY;
 
 
-const NetworkContainer = ({ version, algo, apiPort, apiToken, apiId, apiIPv6, apiFull, pools, bind, update, add, edit, remove }) => (
+const NetworkContainer = ({ version, algo, apiPort, apiToken, apiId, apiIPv6, apiFull, pools, bind, update, add, edit, remove, mode, workers, diff }) => (
   <Network
     version={version}
     algo={algo}
@@ -29,6 +29,9 @@ const NetworkContainer = ({ version, algo, apiPort, apiToken, apiId, apiIPv6, ap
     add={add}
     edit={edit}
     remove={remove}
+    mode={mode}
+    workers={workers}
+    diff={diff}
   />
 );
 
@@ -43,6 +46,9 @@ const mapStateToProps = state => ({
   apiId:    state.config[KIND].apiId,
   pools:    state.config[KIND].pools,
   bind:     state.config[KIND].bind,
+  mode:     state.config[KIND].mode,
+  workers:  state.config[KIND].workers,
+  diff:     state.config[KIND].diff,
 });
 
 
