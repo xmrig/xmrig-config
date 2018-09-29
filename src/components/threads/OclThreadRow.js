@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Icon from '@fortawesome/react-fontawesome';
+import memSize from "../../lib/memSize";
 
 
 export default class OclThreadRow extends React.PureComponent {
@@ -12,7 +13,8 @@ export default class OclThreadRow extends React.PureComponent {
       <tr>
         <td className="text-right text-muted">{this.props.index}</td>
         <td className="text-right">{thread.index}</td>
-        <td className="text-right">{thread.intensity}</td>
+        <td className="text-right"><span className="badge">{thread.intensity}</span></td>
+        <td className="text-right">~{memSize(thread.intensity, this.props.algo)}&nbsp;MB</td>
         <td className="text-right">{thread.worksize}</td>
         <td className="text-right">{thread.strided_index}</td>
         <td className="text-right">{thread.mem_chunk}</td>

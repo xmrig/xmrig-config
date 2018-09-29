@@ -123,6 +123,7 @@ export default class OclThreads extends React.Component {
               <th>#</th>
               <th>index</th>
               <th>intensity</th>
+              <th>memory</th>
               <th>worksize</th>
               <th>strided_index</th>
               <th>mem_chunk</th>
@@ -132,7 +133,7 @@ export default class OclThreads extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.threads.map((thread, index) => <OclThreadRow key={index} index={index} thread={thread} edit={this.editThread} remove={this.removeThread} />)}
+            {this.state.threads.map((thread, index) => <OclThreadRow key={index} index={index} thread={thread} algo={this.props.algo} edit={this.editThread} remove={this.removeThread} />)}
           </tbody>
         </table>
       </div>
