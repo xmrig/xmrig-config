@@ -24,7 +24,7 @@ const INITIAL_STATE = {
     donate:      5,
     syslog:      0,
     logFile:     null,
-    cpuThreads:  { mode: MODE_AUTO, count: 0, av: 0, max: 75, priority: 2, safe: 0, affinity: '', noPages: 0 },
+    cpuThreads:  { mode: MODE_AUTO, count: 0, av: 0, max: 75, priority: 2, safe: 0, affinity: '', noPages: 0, threads: [], aes: -1 },
     oclThreads:  { mode: MODE_UNAVAILABLE },
     cudaThreads: { mode: MODE_UNAVAILABLE },
     pools:       [],

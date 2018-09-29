@@ -4,13 +4,26 @@ import bs58 from 'bs58';
 import isUndefined from 'lodash/isUndefined';
 import isArray from 'lodash/isArray';
 import {
-  ALGO_CRYPTONIGHT, ALGO_CRYPTONIGHT_HEAVY,
-  ALGO_CRYPTONIGHT_LITE, algoName, KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY, KIND_PROXY, KIND_XMRIG, MODE_AUTO, MODE_MANUAL,
+  ALGO_CRYPTONIGHT,
+  ALGO_CRYPTONIGHT_HEAVY,
+  ALGO_CRYPTONIGHT_LITE,
+  algoName,
+  KIND_AMD_LEGACY,
+  KIND_NVIDIA_LEGACY,
+  KIND_PROXY,
+  KIND_XMRIG,
+  MODE_ADVANCED,
+  MODE_AUTO,
+  MODE_MANUAL,
   OS_WINDOWS
 } from '../constants/options';
 import products from '../constants/products';
 import v1 from './serialization/v1';
 import sortObject from "./sortObject";
+
+
+const CPU_LOW_POWER_MODE = [ false, true, 3, 4, 5];
+const CPU_ASM            = [ false, true, 'intel', 'ryzen'];
 
 
 function escape(str) {
@@ -285,6 +298,7 @@ export const getJSON = (type, options, str = true) => {
     result['max-cpu-usage']  = cpuThreads.max;
     result['cpu-priority']   = cpuThreads.priority === 2 ? null : cpuThreads.priority;
     result['huge-pages']     = cpuThreads.noPages === 0;
+    result["hw-aes"]         = cpuThreads.aes === -1 ? null : !!cpuThreads.aes;
 
     if (cpuThreads.mode === MODE_AUTO) {
       result.safe            = cpuThreads.av > 0;
@@ -295,6 +309,15 @@ export const getJSON = (type, options, str = true) => {
       result.safe            = !!cpuThreads.safe;
       result.threads         = cpuThreads.count;
       result['cpu-affinity'] = cpuThreads.affinity ? cpuThreads.affinity : null;
+    }
+    else if (cpuThreads.mode === MODE_ADVANCED) {
+      result.safe            = false;
+      result['cpu-affinity'] = null;
+      result.threads         = cpuThreads.threads.map(thread => ({
+        low_power_mode: CPU_LOW_POWER_MODE[thread.low_power_mode - 1],
+        affine_to_cpu:  thread.affine_to_cpu,
+        asm:            CPU_ASM[thread.asm]
+      }));
     }
   }
 

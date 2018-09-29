@@ -1,5 +1,8 @@
 'use strict';
 
+import isNumber from 'lodash/isNumber';
+import isArray from 'lodash/isArray';
+
 import {
   KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY, KIND_PROXY, KIND_XMRIG, MODE_AUTO,
   MODE_UNAVAILABLE
@@ -10,6 +13,7 @@ const PROXY_KEYS = ["version","name","algo","os","background","colors","retries"
 const POOL_KEYS  = ["id","url","user","pass","enabled","keepalive","nicehash","ssl","pool","coin","variant","tls"];
 const OCL_KEYS   = ["index","intensity","worksize","affine_to_cpu","strided_index","mem_chunk","unroll"];
 const CUDA_KEYS  = ["index","threads","blocks","bfactor","bsleep","affine_to_cpu"];
+const CPU_KEYS   = ["low_power_mode","affine_to_cpu","asm"];
 const KINDS      = [KIND_XMRIG, KIND_PROXY, KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY];
 
 
@@ -51,7 +55,9 @@ function saveCPU(threads) {
     return 0;
   }
 
-  return [ threads.mode, threads.count, threads.av, threads.max, threads.priority, threads.safe, threads.affinity, threads.noPages ];
+  console.log('>>>>>>>>>>>>>>>>>>>>>', threads.aes);
+
+  return [ threads.mode, threads.count, threads.av, threads.max, threads.priority, threads.safe, threads.affinity, threads.noPages, (threads.threads || []).map(thread => CPU_KEYS.map(key => thread[key])), threads.aes ];
 }
 
 
@@ -122,7 +128,27 @@ function restoreCPU(threads) {
     return { mode: MODE_UNAVAILABLE };
   }
 
-  return { mode: threads[0], count: threads[1], av: threads[2], max: threads[3], priority: threads[4], safe: threads[5], affinity: threads[6], noPages: threads[7] }
+  const cpu = {
+    mode:     threads[0],
+    count:    threads[1],
+    av:       threads[2],
+    max:      threads[3],
+    priority: threads[4],
+    safe:     threads[5],
+    affinity: threads[6],
+    noPages:  threads[7]
+  };
+
+  if (isArray(threads[8])) {
+    cpu.threads = threads[8].map(thread => array2object(thread, CPU_KEYS));
+  }
+  else {
+    cpu.threads = [];
+  }
+
+  cpu.aes = isNumber(threads[9]) ? threads[9] : -1;
+
+  return cpu;
 }
 
 

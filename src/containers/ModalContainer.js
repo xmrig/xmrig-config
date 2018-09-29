@@ -8,16 +8,18 @@ import {MODAL_ADD_CUDA_THREAD} from "../constants/ModalTypes";
 
 
 const MODALS = {
-  [types.MODAL_ADD_POOL]:       require('../components/modals/AddPoolModal').default,
-  [types.MODAL_EDIT_POOL]:      require('../components/modals/EditPoolModal').default,
-  [types.MODAL_DELETE_POOL]:    require('../components/modals/DeletePoolModal').default,
-  [types.MODAL_DELETE_PRESET]:  require('../components/modals/DeletePresetModal').default,
-  [types.MODAL_SHARE_PRESET]:   require('../components/modals/SharePresetModal').default,
-  [types.MODAL_ADD_OCL_THREAD]: require('../components/modals/AddOclThreadModal').default,
-  [types.MODAL_DELETE_THREAD]:  require('../components/modals/DeleteThreadModal').default,
-  [types.MODAL_EDIT_OCL_THREAD]: require('../components/modals/EditOclThreadModal').default,
-  [types.MODAL_ADD_CUDA_THREAD]: require('../components/modals/AddCUDAThreadModal').default,
+  [types.MODAL_ADD_POOL]:         require('../components/modals/AddPoolModal').default,
+  [types.MODAL_EDIT_POOL]:        require('../components/modals/EditPoolModal').default,
+  [types.MODAL_DELETE_POOL]:      require('../components/modals/DeletePoolModal').default,
+  [types.MODAL_DELETE_PRESET]:    require('../components/modals/DeletePresetModal').default,
+  [types.MODAL_SHARE_PRESET]:     require('../components/modals/SharePresetModal').default,
+  [types.MODAL_ADD_OCL_THREAD]:   require('../components/modals/AddOclThreadModal').default,
+  [types.MODAL_DELETE_THREAD]:    require('../components/modals/DeleteThreadModal').default,
+  [types.MODAL_EDIT_OCL_THREAD]:  require('../components/modals/EditOclThreadModal').default,
+  [types.MODAL_ADD_CUDA_THREAD]:  require('../components/modals/AddCUDAThreadModal').default,
   [types.MODAL_EDIT_CUDA_THREAD]: require('../components/modals/EditCUDAThreadModal').default,
+  [types.MODAL_ADD_CPU_THREAD]:   require('../components/modals/AddCpuThreadModal').default,
+  [types.MODAL_EDIT_CPU_THREAD]:  require('../components/modals/EditCpuThreadModal').default,
 };
 
 
