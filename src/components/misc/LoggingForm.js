@@ -57,11 +57,10 @@ export default class LoggingForm extends Form {
           <label>
 
             <input
-              checked={!this.props.logFile && this.props.colors}
+              checked={this.props.colors}
               onChange={this.handleInputChange}
               name="colors"
               type="checkbox"
-              disabled={!!this.props.logFile}
             /> Colored output
 
           </label>

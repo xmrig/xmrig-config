@@ -2,9 +2,37 @@
 
 import React from 'react';
 import {ALGO_CRYPTONIGHT_LITE} from "../../constants/options";
+import memSize from "../../lib/memSize";
 
 
 export default class CPUAutoForm extends React.PureComponent {
+  static multiway(av) {
+    switch (av) {
+      case 1:
+      case 3:
+        return 1;
+
+      case 2:
+      case 4:
+        return 2;
+
+      case 5:
+      case 8:
+        return 3;
+
+      case 6:
+      case 9:
+        return 4;
+
+      case 7:
+      case 10:
+        return 5;
+    }
+
+    return 1;
+  }
+
+
   render() {
     return (
       <form>
@@ -15,6 +43,9 @@ export default class CPUAutoForm extends React.PureComponent {
               <option value={0}>Auto</option>
               <option value={1}>1</option>
               <option value={2}>2</option>
+              <option value={5}>3</option>
+              <option value={6}>4</option>
+              <option value={7}>5</option>
             </select>
             {this.renderCacheHint()}
           </div>
@@ -51,12 +82,11 @@ export default class CPUAutoForm extends React.PureComponent {
 
 
   renderCacheHint() {
-    const av = this.av();
-    if (av === 0) {
+    if (this.props.av === 0) {
       return;
     }
 
-    const size = av * (this.props.algo === ALGO_CRYPTONIGHT_LITE ? 1 : 2);
+    const size = memSize(CPUAutoForm.multiway(this.props.av), this.props.algo);
 
     return <div style={{marginBottom: 5}} className="help-block"><b>{size} MB</b> CPU cache required per thread</div>;
   }
@@ -75,19 +105,25 @@ export default class CPUAutoForm extends React.PureComponent {
     const av = this.props.av;
 
     switch (av) {
-      case 0:
-      case 1:
-      case 2:
-        return av;
-
       case 3:
         return 1;
 
       case 4:
         return 2;
 
+      case 8:
+        return 5;
+
+      case 9:
+        return 6;
+
+      case 10:
+        return 7;
+
       default:
-        return 0;
+        break;
     }
+
+    return av;
   }
 }

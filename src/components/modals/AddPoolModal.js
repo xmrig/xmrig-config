@@ -31,9 +31,12 @@ export default class AddPoolModal extends AsyncModal {
       enabled:   1,
       keepalive: 1,
       nicehash:  0,
+      tls:       0,
       ssl:       0,
       pool:      'hv',
-      coin:      props.algo === ALGO_CRYPTONIGHT_LITE ? 'AEON' : 'XMR'
+      coin:      'XMR',
+      algo:      props.algo,
+      variant:   -1
     };
   }
 
@@ -50,13 +53,16 @@ export default class AddPoolModal extends AsyncModal {
           <PoolForm
             pool={this.state.pool}
             coin={this.state.coin}
+            algo={this.state.algo}
             url={this.state.url}
             user={this.state.user}
             pass={this.state.pass}
             keepalive={this.state.keepalive}
             nicehash={this.state.nicehash}
+            tls={this.state.tls}
             isProxy={this.state.proxy}
             ro={false}
+            variant={this.state.variant}
             submit={this.submit}
             update={this.update}
           />
@@ -71,7 +77,7 @@ export default class AddPoolModal extends AsyncModal {
 
 
   isReady() {
-    return !!this.state.url;
+    return !!this.state.url && this.state.user;
   }
 
 

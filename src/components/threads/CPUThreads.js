@@ -1,9 +1,15 @@
 'use strict';
 
 import React from 'react';
-import {MODE_AUTO, MODE_MANUAL} from "../../constants/options";
+import {MODE_ADVANCED, MODE_AUTO, MODE_MANUAL} from "../../constants/options";
 import CPUAutoForm from "./CPUAutoForm";
 import CPUManualForm from "./CPUManualForm";
+import update from "immutability-helper";
+import AddCpuThreadModal from "../modals/AddCpuThreadModal";
+import CPUAdvancedForm from "./CPUAdvancedForm";
+import CpuThreadRow from "./CpuThreadRow";
+import DeleteThreadModal from "../modals/DeleteThreadModal";
+import EditCpuThreadModal from "../modals/EditCpuThreadModal";
 
 
 export default class CPUThreads extends React.Component {
@@ -22,7 +28,8 @@ export default class CPUThreads extends React.Component {
             <label htmlFor="cpuMode">Mode</label>{' '}
             <select className="form-control" value={this.state.mode} id="cpuMode" name="cpuMode" onChange={this.handleModeChange}>
               <option value={MODE_AUTO}>Automatic</option>
-              <option value={MODE_MANUAL}>Manual</option>
+              <option value={MODE_MANUAL}>Simple</option>
+              <option value={MODE_ADVANCED}>Advanced</option>
             </select>
           </div>
         </form>
@@ -40,7 +47,9 @@ export default class CPUThreads extends React.Component {
 
 
   renderBody() {
-    if (this.state.mode === MODE_AUTO) {
+    const { mode } = this.state;
+
+    if (mode === MODE_AUTO) {
       return <CPUAutoForm
         algo={this.props.algo}
         av={this.state.av}
@@ -50,16 +59,46 @@ export default class CPUThreads extends React.Component {
       />
     }
 
-    return <CPUManualForm
-      algo={this.props.algo}
-      count={this.state.count}
-      av={this.state.av}
-      priority={this.state.priority}
-      safe={this.state.safe}
-      affinity={this.state.affinity}
-      noPages={this.state.noPages}
-      update={this.handleUpdate}
-    />;
+    if (mode === MODE_MANUAL) {
+      return <CPUManualForm
+        algo={this.props.algo}
+        count={this.state.count}
+        av={this.state.av}
+        priority={this.state.priority}
+        safe={this.state.safe}
+        affinity={this.state.affinity}
+        noPages={this.state.noPages}
+        update={this.handleUpdate}
+      />;
+    }
+
+    if (mode === MODE_ADVANCED) {
+      return (
+        <div>
+          <CPUAdvancedForm
+            aes={this.state.aes}
+            priority={this.state.priority}
+            update={this.handleUpdate}
+            add={this.addThread}
+          />
+          <table className="table table-striped table-hover table-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>low_power_mode</th>
+                <th>memory</th>
+                <th>asm</th>
+                <th>affine_to_cpu</th>
+                <th style={{width: 100 + '%'}} />
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.threads.map((thread, index) => <CpuThreadRow key={index} index={index} thread={thread} algo={this.props.algo} edit={this.editThread} remove={this.removeThread} />)}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
   }
 
 
@@ -75,5 +114,32 @@ export default class CPUThreads extends React.Component {
 
   save = () => {
     this.props.update({ cpuThreads: this.state });
+  };
+
+
+  addThread = () => {
+    AddCpuThreadModal.show({ }, this.props.dispatch)
+      .then(thread => {
+        this.setState({ threads: update(this.state.threads, {$push: [thread]})}, this.save);
+      })
+      .catch(err => null);
+  };
+
+
+  editThread = index => {
+    EditCpuThreadModal.show({ index, thread: this.state.threads[index] }, this.props.dispatch)
+      .then(result => {
+        this.setState({ threads: update(this.state.threads, {$splice: [[result.index, 1, result.thread]]}) }, this.save);
+      })
+      .catch(err => null);
+  };
+
+
+  removeThread = index => {
+    DeleteThreadModal.show(index, this.props.dispatch)
+      .then(index => {
+        this.setState({ threads: update(this.state.threads, {$splice: [[index, 1]]}) }, this.save);
+      })
+      .catch(err => null);
   };
 }

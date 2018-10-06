@@ -14,6 +14,7 @@ import { getCommandLine, getJSON, deserialize } from '../lib/config';
 import { serialize } from '../lib/config';
 import {addOrChangePreset} from "../actions/presets";
 import SharePresetModal from "./modals/SharePresetModal";
+import {KIND_XMRIG, MODE_ADVANCED} from "../constants/options";
 
 
 export default class Result extends React.PureComponent {
@@ -32,11 +33,8 @@ export default class Result extends React.PureComponent {
 
           <hr />
 
-          <h2>
-            Command line <ClipboardButton button-title="Copy" className="btn btn-success" data-clipboard-target="#cmd" onSuccess={this.onCopied}><span><Icon icon="copy" /></span></ClipboardButton>
-          </h2>
-          <pre id="cmd">{getCommandLine(type, this.props.config)}</pre>
-          {/*<pre>{JSON.stringify(serialize(type, this.props.config, false))}</pre>*/}
+          {this.renderCommandLine()}
+          {this.renderRAW()}
 
           <h4 className="text-muted text-or"><span>OR</span></h4>
 
@@ -59,6 +57,37 @@ export default class Result extends React.PureComponent {
         </div>
       </div>
     );
+  }
+
+
+  renderCommandLine() {
+    console.log(this.props.config);
+    const { kind, cpuThreads } = this.props.config;
+
+    if (kind === KIND_XMRIG && cpuThreads.mode === MODE_ADVANCED) {
+      return (
+        <div>
+          <h2>Command line</h2>
+          <div className="alert alert-danger"><Icon icon="exclamation-triangle" /> Command line is not available for advanced CPU threads mode. This mode supported only via config file.</div>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <h2>
+          Command line <ClipboardButton button-title="Copy" className="btn btn-success" data-clipboard-target="#cmd" onSuccess={this.onCopied}><span><Icon icon="copy" /></span></ClipboardButton>
+        </h2>
+        <pre id="cmd">{getCommandLine(this.props.type, this.props.config)}</pre>
+      </div>
+    );
+  }
+
+
+  renderRAW() {
+    if (process.env.NODE_ENV !== 'production') {
+      return <pre>{JSON.stringify(serialize(this.props.type, this.props.config, false))}</pre>
+    }
   }
 
 

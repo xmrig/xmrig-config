@@ -1,0 +1,38 @@
+{
+  "pools": [
+    {
+      "id": "hv",
+      "name": "Hash Vault"
+    },
+    {
+      "id": "c",
+      "name": "Custom"
+    }
+  ],
+  "hv": {
+    "editor": "nodejs-pool",
+    "coins": [
+      {
+        "code": "Ryo",
+        "name": "Ryo",
+        "url": "pool.ryo.hashvault.pro:3333",
+        "variant": 0
+      },
+      {
+        "code": "XHV",
+        "name": "Haven Protocol",
+        "url": "pool.haven.hashvault.pro:3333",
+        "variant": "xhv"
+      },
+      {
+        "code": "LOKI",
+        "name": "Loki",
+        "url": "pool.loki.hashvault.pro:3333",
+        "variant": 0
+      }
+    ]
+  },
+  "c": {
+    "editor": "custom"
+  }
+}

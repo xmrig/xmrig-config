@@ -16,7 +16,7 @@ export default class PoolForm extends Form {
   render() {
     return (
       <div>
-        <PoolSelectForm ro={this.props.ro} pool={this.props.pool} coin={this.props.coin} update={this.props.update} />
+        <PoolSelectForm ro={this.props.ro} pool={this.props.pool} coin={this.props.coin} algo={this.props.algo} update={this.props.update} />
 
         <hr />
         {this.renderBody()}
@@ -26,17 +26,20 @@ export default class PoolForm extends Form {
 
 
   renderBody() {
-    const pool      = getPool(this.props.coin, this.props.pool);
+    const pool      = getPool(this.props.algo, this.props.pool);
     const Component = EDITORS[(pool && pool.editor && EDITORS.hasOwnProperty(pool.editor)) ? pool.editor : 'custom'];
 
     return <Component url={this.props.url}
                       coin={this.props.coin}
+                      algo={this.props.algo}
                       pool={this.props.pool}
                       user={this.props.user}
                       pass={this.props.pass}
                       keepalive={this.props.keepalive}
                       nicehash={this.props.nicehash}
+                      tls={this.props.tls}
                       isProxy={this.props.isProxy}
+                      variant={this.props.variant}
                       submit={this.props.submit}
                       update={this.props.update}
     />

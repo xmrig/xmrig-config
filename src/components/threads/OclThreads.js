@@ -35,7 +35,7 @@ export default class OclThreads extends React.Component {
           </div>
         </form>
 
-        <h2>AMD/OpenCL {this.renderAddBtn()}</h2>
+        <h2>AMD/OpenCL</h2>
         {this.renderBody()}
 
       </div>
@@ -55,17 +55,66 @@ export default class OclThreads extends React.Component {
   }
 
 
+  renderPlatform() {
+    return (
+      <div className="form-group">
+        <label htmlFor="oclPlatform">OpenCL platform</label>{' '}
+        <select
+          disabled={this.props.version < 20800}
+          className="form-control"
+          value={this.props.version < 20800 ? 'AMD' : this.state.platform}
+          id="oclPlatform"
+          name="oclPlatform"
+          onChange={event => { this.setState({ platform: event.target.value}, this.save); }}
+        >
+          <option value="AMD">AMD</option>
+          <option value="NVIDIA">NVIDIA</option>
+          <option value="Intel">Intel</option>
+        </select>
+      </div>
+    );
+  }
+
+
+  renderPlatformOrIndex() {
+    if (this.props.version >= 20800) {
+      return this.renderPlatform();
+    }
+
+    return (
+      <div className="form-group">
+        <label htmlFor="oclPlatform">OpenCL platform index</label>{' '}
+        <input
+          type="number"
+          className="form-control"
+          id="oclPlatform"
+          value={this.state.platform}
+          onChange={event => { this.setState({ platform: +event.target.value}, this.save); }}
+          style={{width: 64}}
+          min={0}
+        />
+      </div>
+    );
+  }
+
+
   renderBody() {
     if (this.state.mode === MODE_AUTO) {
-      return <p className="text-success"><Icon icon="check-circle" /> In automatic mode the miner will try detect and configure all available devices. No additional settings required.</p>;
+      return (
+        <div>
+          <form className="form-inline" style={{marginBottom: 10}} onSubmit={event => event.preventDefault()}>
+            {this.renderPlatform()}
+          </form>
+        </div>
+      )
     }
 
     return (
       <div>
         <form className="form-inline" style={{marginBottom: 10}} onSubmit={event => event.preventDefault()}>
-          <div className="form-group">
-            <label htmlFor="oclPlatform">OpenCL platform index</label>{' '}
-            <input type="number" className="form-control" id="oclPlatform" value={this.state.platform} onChange={this.handlePlatformChange} style={{width: 64}} min={0} />
+          {this.renderPlatformOrIndex()}
+          <div className="form-group" style={{paddingLeft: 12}}>
+            {this.renderAddBtn()}
           </div>
         </form>
         <table className="table table-striped table-hover table-middle">
@@ -74,13 +123,17 @@ export default class OclThreads extends React.Component {
               <th>#</th>
               <th>index</th>
               <th>intensity</th>
+              <th>memory</th>
               <th>worksize</th>
+              <th>strided_index</th>
+              <th>mem_chunk</th>
+              <th>unroll</th>
               <th>affinity</th>
               <th style={{width: 100 + '%'}} />
             </tr>
           </thead>
           <tbody>
-            {this.state.threads.map((thread, index) => <OclThreadRow key={index} index={index} thread={thread} edit={this.editThread} remove={this.removeThread} />)}
+            {this.state.threads.map((thread, index) => <OclThreadRow key={index} index={index} thread={thread} algo={this.props.algo} edit={this.editThread} remove={this.removeThread} />)}
           </tbody>
         </table>
       </div>
@@ -93,13 +146,10 @@ export default class OclThreads extends React.Component {
   };
 
 
-  handlePlatformChange = event => {
-    this.setState({ platform: +event.target.value}, this.save);
-  };
-
-
   addThread = () => {
-    AddOclThreadModal.show(this.props.dispatch)
+    const { platform } = this.state;
+
+    AddOclThreadModal.show({ platform }, this.props.dispatch)
       .then(thread => {
         this.setState({ threads: update(this.state.threads, {$push: [thread]})}, this.save);
       })
@@ -108,7 +158,9 @@ export default class OclThreads extends React.Component {
 
 
   editThread = index => {
-    EditOclThreadModal.show(index, this.state.threads[index], this.props.dispatch)
+    const { platform } = this.state;
+
+    EditOclThreadModal.show({ index, thread: this.state.threads[index], platform }, this.props.dispatch)
       .then(result => {
         this.setState({ threads: update(this.state.threads, {$splice: [[result.index, 1, result.thread]]}) }, this.save);
       })

@@ -60,12 +60,11 @@ export default class NodeJsPool extends React.PureComponent {
 
 
   build = () => {
-    const coin = getCoin(this.props.coin, this.props.pool);
+    const coin = getCoin(this.props.algo, this.props.coin, this.props.pool);
     if (!coin) {
       return;
     }
 
-    console.log(coin);
     let user   = this.state.wallet;
     let pass   = this.state.worker || 'x';
     const diff = this.state.diff;
@@ -82,7 +81,9 @@ export default class NodeJsPool extends React.PureComponent {
       url: coin.url,
       user,
       pass,
-      keepalive: true
+      keepalive: true,
+      nicehash:  false,
+      variant:   coin.variant
     };
 
     this.props.update(state);
@@ -93,15 +94,11 @@ export default class NodeJsPool extends React.PureComponent {
     const user = props.user.split('+');
     const pass = props.pass.split(':');
 
-    const state = {
+    return {
       wallet: user[0],
       worker: pass[0],
       email:  pass[1]  || '',
       diff:   +user[1] || ''
     };
-
-    console.log(user);
-
-    return state;
   }
 }
