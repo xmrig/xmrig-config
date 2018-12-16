@@ -9,6 +9,10 @@
       "name": "supportXMR.com"
     },
     {
+      "id": "twominers",
+      "name": "2miners.com"
+    },
+    {
       "id": "c",
       "name": "Custom"
     }
@@ -60,6 +64,21 @@
         "code": "GRFT",
         "name": "Graft",
         "url": "pool.graft.hashvault.pro:3333"
+      }
+    ]
+  },
+  "twominers": {
+    "editor": "2miners-pool",
+    "coins": [
+      {
+        "code": "XMR",
+        "name": "Monero",
+        "url": "xmr.2miners.com:2222"
+      },
+      {
+        "code": "XMRSOLO",
+        "name": "Monero SOLO",
+        "url": "solo-xmr.2miners.com:4444"
       }
     ]
   },

@@ -8,6 +8,7 @@ import {getPool} from "../../lib/pools";
 
 const EDITORS = {
   'nodejs-pool': require('./pools/NodeJsPool').default,
+  '2miners-pool': require('./pools/TwoMinersPool').default,
   'custom':      require('./pools/CustomPool').default
 };
 
