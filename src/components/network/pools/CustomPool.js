@@ -4,7 +4,12 @@ import React from 'react';
 import cn from 'classnames';
 import Icon from '@fortawesome/react-fontawesome';
 import Form from "../../Form";
-import {ALGO_CRYPTONIGHT, ALGO_CRYPTONIGHT_HEAVY, ALGO_CRYPTONIGHT_LITE} from "../../../constants/options";
+import {
+  ALGO_CRYPTONIGHT,
+  ALGO_CRYPTONIGHT_HEAVY,
+  ALGO_CRYPTONIGHT_LITE,
+  ALGO_CRYPTONIGHT_PICO
+} from "../../../constants/options";
 
 
 export default class CustomPool extends Form {
@@ -95,8 +100,10 @@ export default class CustomPool extends Form {
           <option value={2}>2</option>
           <option value={1}>1</option>
           <option value={0}>0</option>
-          <option value={"xtl"}>Stellite</option>
-          <option value={"msr"}>Masari</option>
+          <option value={"xtl"}>xtl</option>
+          <option value={"msr"}>msr</option>
+          <option value={"half"}>half</option>
+          <option value={"gpu"}>gpu</option>
           <option value={"xao"}>Alloy</option>
           <option value={"rto"}>Arto</option>
         </select>
@@ -118,6 +125,14 @@ export default class CustomPool extends Form {
           <option value={0}>0</option>
           <option value={"xhv"}>Haven Protocol</option>
           <option value={"tube"}>BitTube</option>
+        </select>
+      );
+    }
+
+    if (this.props.algo === ALGO_CRYPTONIGHT_PICO) {
+      return (
+        <select disabled className="form-control" value={this.props.variant} name="variant" onChange={this.handleVariantChange} style={{maxWidth: 300}}>
+          <option value={"trtl"}>trtl</option>
         </select>
       );
     }

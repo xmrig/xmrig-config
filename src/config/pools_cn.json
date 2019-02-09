@@ -35,28 +35,28 @@
         "variant": 0
       },
       {
-        "code": "ITNS",
-        "name": "Intense",
-        "url": "pool.intense.hashvault.pro:3333",
-        "variant": 1
+        "code": "LTHN",
+        "name": "Lethean",
+        "url": "pool.lethean.hashvault.pro:3333",
+        "variant": 2
       },
       {
         "code": "GRFT",
         "name": "Graft",
         "url": "pool.graft.hashvault.pro:3333",
-        "variant": 1
+        "variant": 2
       },
       {
         "code": "XTL",
         "name": "Stellite",
         "url": "pool.stellite.hashvault.pro:3333",
-        "variant": "xtl"
+        "variant": "half"
       },
       {
         "code": "MSR",
         "name": "Masari",
         "url": "pool.masari.hashvault.pro:3333",
-        "variant": "msr"
+        "variant": "half"
       },
       {
         "code": "DERO",

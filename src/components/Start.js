@@ -14,7 +14,7 @@ import {
   OS_WINDOWS,
   OS_LINUX,
   OS_X,
-  ALGO_CRYPTONIGHT_HEAVY
+  ALGO_CRYPTONIGHT_HEAVY, ALGO_CRYPTONIGHT_PICO
 } from '../constants/options';
 
 
@@ -36,6 +36,7 @@ export default class Start extends React.PureComponent {
               {this.renderAlgoBtn(ALGO_CRYPTONIGHT,       'CryptoNight')}
               {this.renderAlgoBtn(ALGO_CRYPTONIGHT_LITE,  'CryptoNight-Lite')}
               {this.renderAlgoBtn(ALGO_CRYPTONIGHT_HEAVY, 'CryptoNight-Heavy')}
+              {this.renderAlgoBtn(ALGO_CRYPTONIGHT_PICO,  'CryptoNight-Pico')}
             </div>
             <div>
               <small className="text-muted">Algorithm variant specified separately for each pool.</small>
@@ -66,10 +67,12 @@ export default class Start extends React.PureComponent {
 
 
   renderAlgoBtn(algo, component) {
+    const disabled = (this.props.version < 20600 && algo === ALGO_CRYPTONIGHT_HEAVY) ||
+                     (this.props.version < 21100 && algo === ALGO_CRYPTONIGHT_PICO);
     return (
       <button
         onClick={() => this.props.update({ algo })}
-        disabled={this.props.version < 20600 && algo === ALGO_CRYPTONIGHT_HEAVY}
+        disabled={disabled}
         type="button"
         className={cn('btn', 'btn-default', { active: this.props.algo === algo })}
       >

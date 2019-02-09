@@ -8,6 +8,7 @@ export const KIND_NVIDIA_LEGACY = 'nvidia';
 export const ALGO_CRYPTONIGHT       = 0;
 export const ALGO_CRYPTONIGHT_LITE  = 1;
 export const ALGO_CRYPTONIGHT_HEAVY = 2;
+export const ALGO_CRYPTONIGHT_PICO  = 3;
 
 export const OS_WINDOWS   = 0;
 export const OS_LINUX     = 1;
@@ -35,6 +36,9 @@ export const algoName = (algo, version) => {
 
     case ALGO_CRYPTONIGHT_HEAVY:
       return 'cryptonight-heavy';
+
+    case ALGO_CRYPTONIGHT_PICO:
+      return 'cryptonight-pico';
 
     default:
       break;

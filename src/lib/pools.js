@@ -5,11 +5,10 @@ import find from 'lodash/find';
 import POOLS_CN       from '../config/pools_cn';
 import POOLS_CN_LITE  from '../config/pools_cn_lite';
 import POOLS_CN_HEAVY from '../config/pools_cn_heavy';
+import POOLS_CN_PICO  from '../config/pools_cn_pico';
 
 
-const POOLS = [ POOLS_CN, POOLS_CN_LITE, POOLS_CN_HEAVY ];
-
-console.log(POOLS);
+const POOLS = [ POOLS_CN, POOLS_CN_LITE, POOLS_CN_HEAVY, POOLS_CN_PICO ];
 
 
 export const getPools = algo => {
