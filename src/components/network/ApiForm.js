@@ -77,7 +77,7 @@ export default class ApiForm extends Form {
 
 
   renderExtra() {
-    if (this.props.apiPort === 0 || this.props.version < 20600) {
+    if (this.props.apiPort === 0) {
       return;
     }
 

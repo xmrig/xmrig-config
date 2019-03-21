@@ -51,12 +51,7 @@ export const getCommandLine = (type, options) => {
   array.push(options.os === OS_WINDOWS ? `${product.exe}.exe` : `./${product.exe}`);
 
   if (options.algo !== ALGO_CRYPTONIGHT) {
-    if (isProxy && options.version < 20500 && options.algo !== ALGO_CRYPTONIGHT_HEAVY) {
-      array.push('--coin aeon');
-    }
-    else {
-      array.push(`-a ${algoName(options.algo, options.version)}`);
-    }
+    array.push(`-a ${algoName(options.algo, options.version)}`);
   }
 
   if (options.background) {
@@ -119,7 +114,7 @@ export const getCommandLine = (type, options) => {
       array.push(`-m simple`);
     }
 
-    if (options.version >= 20800 && options.workers !== 1) {
+    if (options.workers !== 1) {
       array.push(`--workers ${PROXY_WORKERS_CMD[options.workers]}`);
     }
 
@@ -189,20 +184,18 @@ export const getCommandLine = (type, options) => {
           array.push(oclThreads.threads.map(thread => thread.affine_to_cpu === false ? -1 : thread.affine_to_cpu).join(','));
         }
 
-        if (options.version >= 20800) {
-          array.push('--opencl-strided-index');
-          array.push(oclThreads.threads.map(thread => thread.strided_index || (oclThreads.platform === 'NVIDIA' ? 0 : 2)).join(','));
+        array.push('--opencl-strided-index');
+        array.push(oclThreads.threads.map(thread => thread.strided_index || (oclThreads.platform === 'NVIDIA' ? 0 : 2)).join(','));
 
-          array.push('--opencl-mem-chunk');
-          array.push(oclThreads.threads.map(thread => thread.mem_chunk || 2).join(','));
+        array.push('--opencl-mem-chunk');
+        array.push(oclThreads.threads.map(thread => thread.mem_chunk || 2).join(','));
 
-          array.push('--opencl-unroll');
-          array.push(oclThreads.threads.map(thread => isUndefined(thread.unroll) ? 8 : thread.unroll).join(','));
-        }
+        array.push('--opencl-unroll');
+        array.push(oclThreads.threads.map(thread => isUndefined(thread.unroll) ? 8 : thread.unroll).join(','));
       }
     }
 
-    if (oclThreads.mode === MODE_AUTO && options.version >= 20800 && oclThreads.platform !== 'AMD') {
+    if (oclThreads.mode === MODE_AUTO && oclThreads.platform !== 'AMD') {
       array.push(`--opencl-platform ${oclThreads.platform}`);
     }
   }
@@ -251,7 +244,7 @@ export const getCommandLine = (type, options) => {
     array.push(`-u ${pool.user ? pool.user : 'x'}`);
     array.push(`-p ${pool.pass ? pool.pass : 'x'}`);
 
-    if (options.version >= 20500 && pool.variant !== -1 && pool.variant != null) {
+    if (pool.variant !== -1 && pool.variant != null) {
       array.push(`--variant ${pool.variant}`);
     }
 
@@ -259,7 +252,7 @@ export const getCommandLine = (type, options) => {
       array.push('-k');
     }
 
-    if (options.version >= 20800 && pool.tls) {
+    if (pool.tls) {
       array.push('--tls');
     }
 
@@ -278,12 +271,7 @@ export const getJSON = (type, options, str = true) => {
   const result  = {};
   const isProxy = type === KIND_PROXY;
 
-  if (isProxy && options.version < 20500) {
-    result.coin = options.algo === ALGO_CRYPTONIGHT_LITE ? 'aeon' : 'xmr';
-  }
-  else {
-    result.algo = algoName(options.algo, options.version);
-  }
+  result.algo = algoName(options.algo, options.version);
 
   result.background      = !!options.background;
   result.colors          = !!options.colors;
@@ -356,8 +344,8 @@ export const getJSON = (type, options, str = true) => {
         const bsleep  = cudaThreads.bfactor === defaultBSleep  ? undefined : cudaThreads.bsleep;
 
         // https://github.com/xmrig/xmrig-nvidia/commit/7f2f86fd418ccd95540335dac4b61430c6649049
-        result['cuda-bfactor'] = options.version === 20400 ? ('' + bfactor) : bfactor;
-        result['cuda-bsleep']  = options.version === 20400 ? ('' + bsleep)  : bsleep;
+        result['cuda-bfactor'] = bfactor;
+        result['cuda-bsleep']  = bsleep;
       }
 
       result.threads = null;
@@ -373,9 +361,9 @@ export const getJSON = (type, options, str = true) => {
       user:              pool.user,
       pass:              pool.pass || 'x',
       keepalive:         !!pool.keepalive,
-      variant:           options.version >= 20500 ? pool.variant : undefined,
-      tls:               options.version >= 20800 ? !!pool.tls : undefined,
-      'tls-fingerprint': options.version >= 20800 ? null : undefined,
+      variant:           pool.variant,
+      tls:               !!pool.tls,
+      'tls-fingerprint': null,
     }));
   }
   else {
@@ -385,9 +373,9 @@ export const getJSON = (type, options, str = true) => {
       pass:              pool.pass || 'x',
       keepalive:         !!pool.keepalive,
       nicehash:          !!pool.nicehash,
-      variant:           options.version >= 20500 ? pool.variant : undefined,
-      tls:               options.version >= 20800 ? !!pool.tls : undefined,
-      'tls-fingerprint': options.version >= 20800 ? null : undefined,
+      variant:           pool.variant,
+      tls:               !!pool.tls,
+      'tls-fingerprint': null,
     }));
   }
 

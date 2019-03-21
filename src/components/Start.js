@@ -67,12 +67,9 @@ export default class Start extends React.PureComponent {
 
 
   renderAlgoBtn(algo, component) {
-    const disabled = (this.props.version < 20600 && algo === ALGO_CRYPTONIGHT_HEAVY) ||
-                     (this.props.version < 21100 && algo === ALGO_CRYPTONIGHT_PICO);
     return (
       <button
         onClick={() => this.props.update({ algo })}
-        disabled={disabled}
         type="button"
         className={cn('btn', 'btn-default', { active: this.props.algo === algo })}
       >

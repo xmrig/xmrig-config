@@ -12,7 +12,7 @@ import {ADD_POOL, DELETE_POOL, UPDATE, UPDATE_POOL} from '../constants/ActionTyp
 
 const INITIAL_STATE = {
   [KIND_XMRIG]: {
-    version:     21100,
+    version:     21400,
     algo:        ALGO_CRYPTONIGHT,
     os:          OS_WINDOWS,
     name:        '',
@@ -36,7 +36,7 @@ const INITIAL_STATE = {
     apiFull:     0,
   },
   [KIND_PROXY]: {
-    version:    21100,
+    version:    21400,
     algo:       ALGO_CRYPTONIGHT,
     os:         OS_WINDOWS,
     name:       '',
@@ -62,7 +62,7 @@ const INITIAL_STATE = {
     diff:       0,
   },
   [KIND_AMD_LEGACY]: {
-    version:     21100,
+    version:     21400,
     algo:        ALGO_CRYPTONIGHT,
     os:          OS_WINDOWS,
     name:        '',
@@ -86,7 +86,7 @@ const INITIAL_STATE = {
     apiFull:     0,
   },
   [KIND_NVIDIA_LEGACY]: {
-    version:     21100,
+    version:     21400,
     algo:        ALGO_CRYPTONIGHT,
     os:          OS_WINDOWS,
     name:        '',

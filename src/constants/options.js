@@ -23,10 +23,6 @@ export const MODE_UNAVAILABLE = 5;
 
 
 export const algoName = (algo, version) => {
-  if (version < 20600) {
-    return algo === ALGO_CRYPTONIGHT_LITE ? 'cryptonight-lite' : 'cryptonight';
-  }
-
   switch (algo) {
     case ALGO_CRYPTONIGHT:
       return 'cryptonight';

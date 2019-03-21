@@ -60,9 +60,8 @@ export default class OclThreads extends React.Component {
       <div className="form-group">
         <label htmlFor="oclPlatform">OpenCL platform</label>{' '}
         <select
-          disabled={this.props.version < 20800}
           className="form-control"
-          value={this.props.version < 20800 ? 'AMD' : this.state.platform}
+          value={this.state.platform}
           id="oclPlatform"
           name="oclPlatform"
           onChange={event => { this.setState({ platform: event.target.value}, this.save); }}
@@ -71,28 +70,6 @@ export default class OclThreads extends React.Component {
           <option value="NVIDIA">NVIDIA</option>
           <option value="Intel">Intel</option>
         </select>
-      </div>
-    );
-  }
-
-
-  renderPlatformOrIndex() {
-    if (this.props.version >= 20800) {
-      return this.renderPlatform();
-    }
-
-    return (
-      <div className="form-group">
-        <label htmlFor="oclPlatform">OpenCL platform index</label>{' '}
-        <input
-          type="number"
-          className="form-control"
-          id="oclPlatform"
-          value={this.state.platform}
-          onChange={event => { this.setState({ platform: +event.target.value}, this.save); }}
-          style={{width: 64}}
-          min={0}
-        />
       </div>
     );
   }
@@ -112,7 +89,7 @@ export default class OclThreads extends React.Component {
     return (
       <div>
         <form className="form-inline" style={{marginBottom: 10}} onSubmit={event => event.preventDefault()}>
-          {this.renderPlatformOrIndex()}
+          {this.renderPlatform()}
           <div className="form-group" style={{paddingLeft: 12}}>
             {this.renderAddBtn()}
           </div>
