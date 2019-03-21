@@ -19,56 +19,56 @@
       {
         "code": "XMR",
         "name": "Monero",
-        "url": "pool.monero.hashvault.pro:3333",
+        "url": "pool.hashvault.pro:3333",
         "variant": -1
       },
       {
         "code": "XRB",
         "name": "Karbo",
         "url": "pool.karbo.hashvault.pro:3333",
-        "variant": 0
+        "variant": -1
       },
       {
         "code": "ETN",
         "name": "Electroneum",
         "url": "pool.electroneum.hashvault.pro:3333",
-        "variant": 0
+        "variant": -1
       },
       {
         "code": "LTHN",
         "name": "Lethean",
         "url": "pool.lethean.hashvault.pro:3333",
-        "variant": 2
+        "variant": -1
       },
       {
         "code": "GRFT",
         "name": "Graft",
         "url": "pool.graft.hashvault.pro:3333",
-        "variant": 2
+        "variant": -1
       },
       {
         "code": "XTL",
         "name": "Stellite",
         "url": "pool.stellite.hashvault.pro:3333",
-        "variant": "half"
+        "variant": -1
       },
       {
         "code": "MSR",
         "name": "Masari",
         "url": "pool.masari.hashvault.pro:3333",
-        "variant": "half"
+        "variant": -1
       },
       {
         "code": "DERO",
         "name": "Dero",
         "url": "pool.dero.hashvault.pro:3333",
-        "variant": 1
+        "variant": -1
       },
       {
         "code": "SUMO",
         "name": "Sumokoin",
         "url": "pool.sumo.hashvault.pro:3333",
-        "variant": 0
+        "variant": -1
       }
     ]
   },

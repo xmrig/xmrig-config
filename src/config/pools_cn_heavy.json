@@ -16,19 +16,19 @@
         "code": "Ryo",
         "name": "Ryo",
         "url": "pool.ryo.hashvault.pro:3333",
-        "variant": 0
+        "variant": -1
       },
       {
         "code": "XHV",
         "name": "Haven Protocol",
         "url": "pool.haven.hashvault.pro:3333",
-        "variant": "xhv"
+        "variant": -1
       },
       {
         "code": "LOKI",
         "name": "Loki",
         "url": "pool.loki.hashvault.pro:3333",
-        "variant": 0
+        "variant": -1
       }
     ]
   },

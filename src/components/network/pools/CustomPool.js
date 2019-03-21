@@ -97,15 +97,18 @@ export default class CustomPool extends Form {
       return (
         <select className="form-control" value={this.props.variant} name="variant" onChange={this.handleVariantChange} style={{maxWidth: 300}}>
           <option value={-1}>Monero/Automatic</option>
+          <option value={"r"}>r</option>
           <option value={2}>2</option>
           <option value={1}>1</option>
           <option value={0}>0</option>
-          <option value={"xtl"}>xtl</option>
-          <option value={"msr"}>msr</option>
-          <option value={"half"}>half</option>
+          <option value={"double"}>double</option>
           <option value={"gpu"}>gpu</option>
-          <option value={"xao"}>Alloy</option>
-          <option value={"rto"}>Arto</option>
+          <option value={"half"}>half</option>
+          <option value={"rto"}>rto</option>
+          <option value={"rwz"}>rwz</option>
+          <option value={"wow"}>wow</option>
+          <option value={"xao"}>xao</option>
+          <option value={"zls"}>zls</option>
         </select>
       );
     }
@@ -123,8 +126,8 @@ export default class CustomPool extends Form {
       return (
         <select className="form-control" value={this.props.variant} name="variant" onChange={this.handleVariantChange} style={{maxWidth: 300}}>
           <option value={0}>0</option>
-          <option value={"xhv"}>Haven Protocol</option>
-          <option value={"tube"}>BitTube</option>
+          <option value={"xhv"}>xhv</option>
+          <option value={"tube"}>tube</option>
         </select>
       );
     }
