@@ -19,6 +19,12 @@
         "name": "TurtleCoin",
         "url": "pool.turtle.hashvault.pro:3333",
         "variant": "trtl"
+      },
+      {
+        "code": "LOKI",
+        "name": "Loki",
+        "url": "pool.loki.hashvault.pro:3333",
+        "variant": -1
       }
     ]
   },
