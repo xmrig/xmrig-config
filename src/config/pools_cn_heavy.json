@@ -25,9 +25,15 @@
         "variant": -1
       },
       {
-        "code": "LOKI",
-        "name": "Loki",
-        "url": "pool.loki.hashvault.pro:3333",
+        "code": "TUBE",
+        "name": "BitTube",
+        "url": "pool.bittube.hashvault.pro:3333",
+        "variant": -1
+      },
+      {
+        "code": "BLOC",
+        "name": "bloc.money",
+        "url": "pool.bloc.hashvault.pro:3333",
         "variant": -1
       }
     ]
