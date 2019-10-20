@@ -8,7 +8,15 @@ import Tabs from './Tabs';
 import VersionForm from './start/VersionForm';
 
 import { Link } from 'react-router-dom';
-import { ALGO_CRYPTONIGHT, ALGO_CRYPTONIGHT_LITE, OS_WINDOWS, OS_LINUX, OS_X } from '../constants/options';
+import {
+  ALGO_CRYPTONIGHT,
+  ALGO_CRYPTONIGHT_LITE,
+  OS_WINDOWS,
+  OS_LINUX,
+  OS_X,
+  ALGO_CRYPTONIGHT_HEAVY, ALGO_CRYPTONIGHT_PICO
+} from '../constants/options';
+import Deprecated from "./Deprecated";
 
 
 export default class Start extends React.PureComponent {
@@ -19,6 +27,8 @@ export default class Start extends React.PureComponent {
       <div>
         <Navbar type={type} path="" />
         <div className="container">
+          {this.renderDeprecated()}
+
           <Tabs type={type} path="" />
           <h2>Version</h2>
           <VersionForm version={this.props.version} update={this.props.update} />
@@ -26,8 +36,13 @@ export default class Start extends React.PureComponent {
           <h2>Algorithm</h2>
           <div>
             <div className="btn-group">
-              {this.renderAlgoBtn(ALGO_CRYPTONIGHT,      'CryptoNight')}
-              {this.renderAlgoBtn(ALGO_CRYPTONIGHT_LITE, 'CryptoNight-Lite')}
+              {this.renderAlgoBtn(ALGO_CRYPTONIGHT,       'CryptoNight')}
+              {this.renderAlgoBtn(ALGO_CRYPTONIGHT_LITE,  'CryptoNight-Lite')}
+              {this.renderAlgoBtn(ALGO_CRYPTONIGHT_HEAVY, 'CryptoNight-Heavy')}
+              {this.renderAlgoBtn(ALGO_CRYPTONIGHT_PICO,  'CryptoNight-Pico')}
+            </div>
+            <div>
+              <small className="text-muted">Algorithm variant specified separately for each pool.</small>
             </div>
           </div>
 
@@ -56,7 +71,11 @@ export default class Start extends React.PureComponent {
 
   renderAlgoBtn(algo, component) {
     return (
-      <button onClick={() => this.props.update({ algo })} type="button" className={cn('btn', 'btn-default', { active: this.props.algo === algo })}>
+      <button
+        onClick={() => this.props.update({ algo })}
+        type="button"
+        className={cn('btn', 'btn-default', { active: this.props.algo === algo })}
+      >
         {component}
       </button>
     );
@@ -69,5 +88,14 @@ export default class Start extends React.PureComponent {
         <Icon icon={['fab', icon]} /> {name}
       </button>
     );
+  }
+
+
+  renderDeprecated() {
+    const { type } = this.props;
+
+    if (type === 'xmrig' || type === 'amd') {
+      return <Deprecated />;
+    }
   }
 }

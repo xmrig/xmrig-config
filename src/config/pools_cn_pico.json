@@ -15,9 +15,16 @@
     "editor": "nodejs-pool",
     "coins": [
       {
-        "code": "AEON",
-        "name": "AEON",
-        "url": "pool.aeon.hashvault.pro:3333"
+        "code": "TRTL",
+        "name": "TurtleCoin",
+        "url": "pool.turtle.hashvault.pro:3333",
+        "variant": "trtl"
+      },
+      {
+        "code": "LOKI",
+        "name": "Loki",
+        "url": "pool.loki.hashvault.pro:3333",
+        "variant": -1
       }
     ]
   },

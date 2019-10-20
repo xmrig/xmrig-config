@@ -10,12 +10,18 @@ import EditPoolModal from "../../components/modals/EditPoolModal";
 import DeletePoolModal from "../../components/modals/DeletePoolModal";
 
 
-const NetworkContainer = ({ algo, apiPort, apiToken, apiId, pools, update, add, edit, remove }) => (
-  <Network type={KIND_AMD_LEGACY}
+const KIND = KIND_AMD_LEGACY;
+
+
+const NetworkContainer = ({ version, algo, apiPort, apiToken, apiId, apiIPv6, apiFull, pools, update, add, edit, remove }) => (
+  <Network type={KIND}
+           version={version}
            algo={algo}
            apiPort={apiPort}
            apiToken={apiToken}
            apiId={apiId}
+           apiIPv6={apiIPv6}
+           apiFull={apiFull}
            pools={pools}
            update={update}
            add={add}
@@ -26,26 +32,29 @@ const NetworkContainer = ({ algo, apiPort, apiToken, apiId, pools, update, add, 
 
 
 const mapStateToProps = state => ({
-  algo:     state.config[KIND_AMD_LEGACY].algo,
-  apiPort:  state.config[KIND_AMD_LEGACY].apiPort,
-  apiToken: state.config[KIND_AMD_LEGACY].apiToken,
-  apiId:    state.config[KIND_AMD_LEGACY].apiId,
-  pools:    state.config[KIND_AMD_LEGACY].pools
+  version:  state.config[KIND].version,
+  algo:     state.config[KIND].algo,
+  apiPort:  state.config[KIND].apiPort,
+  apiToken: state.config[KIND].apiToken,
+  apiIPv6:  state.config[KIND].apiIPv6,
+  apiFull:  state.config[KIND].apiFull,
+  apiId:    state.config[KIND].apiId,
+  pools:    state.config[KIND].pools
 });
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   update(options) {
-    dispatch(update(KIND_AMD_LEGACY, options));
+    dispatch(update(KIND, options));
   },
   add(algo) {
-    AddPoolModal.show(KIND_AMD_LEGACY, algo, false, dispatch);
+    AddPoolModal.show(KIND, algo, false, dispatch);
   },
   edit(pool) {
-    EditPoolModal.show(KIND_AMD_LEGACY, pool, dispatch);
+    EditPoolModal.show(KIND, pool, dispatch);
   },
   remove(pool) {
-    DeletePoolModal.show(KIND_AMD_LEGACY, pool, dispatch);
+    DeletePoolModal.show(KIND, pool, dispatch);
   },
 });
 

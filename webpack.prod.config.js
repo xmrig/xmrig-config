@@ -3,6 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 
 module.exports = {
@@ -17,6 +18,7 @@ module.exports = {
     publicPath: '/'
   },
 
+  mode: 'production',
   context: path.resolve(__dirname, 'src'),
 
   module: {
@@ -30,12 +32,17 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      compress: {
-        drop_console: true,
-        unsafe: true,
-        warnings: false
+    new UglifyJsPlugin({
+      extractComments: true,
+      uglifyOptions: {
+        compress: {
+          drop_console: true,
+          // unsafe: true,
+          warnings: false
+        },
+        output: {
+          comments: false
+        },
       }
     }),
     new HtmlWebpackPlugin({template: './index.html'})

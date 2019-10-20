@@ -1,0 +1,44 @@
+{
+  "pools": [
+    {
+      "id": "hv",
+      "name": "Hash Vault"
+    },
+    {
+      "id": "c",
+      "name": "Custom"
+    }
+  ],
+  "hv": {
+    "editor": "nodejs-pool",
+    "coins": [
+      {
+        "code": "Ryo",
+        "name": "Ryo",
+        "url": "pool.ryo.hashvault.pro:3333",
+        "variant": -1
+      },
+      {
+        "code": "XHV",
+        "name": "Haven Protocol",
+        "url": "pool.haven.hashvault.pro:3333",
+        "variant": -1
+      },
+      {
+        "code": "TUBE",
+        "name": "BitTube",
+        "url": "pool.bittube.hashvault.pro:3333",
+        "variant": -1
+      },
+      {
+        "code": "BLOC",
+        "name": "bloc.money",
+        "url": "pool.bloc.hashvault.pro:3333",
+        "variant": -1
+      }
+    ]
+  },
+  "c": {
+    "editor": "custom"
+  }
+}

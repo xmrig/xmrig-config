@@ -4,27 +4,24 @@ import React from 'react';
 import Icon from '@fortawesome/react-fontawesome';
 import AsyncModal from './AsyncModal';
 import { Modal, Header, Title, Body, Footer, Cancel } from './Modal';
-import {MODAL_ADD_OCL_THREAD} from "../../constants/ModalTypes";
+import {MODAL_ADD_CPU_THREAD} from "../../constants/ModalTypes";
 import {showAsync} from "../../actions/modals";
+import CpuThreadForm from '../threads/CpuThreadForm';
 import OclThreadForm from "../threads/OclThreadForm";
 
 
-export default class AddOclThreadModal extends AsyncModal {
+export default class AddCpuThreadModal extends AsyncModal {
   static show(props, dispatch) {
-    return showAsync(MODAL_ADD_OCL_THREAD, props, dispatch)
+    return showAsync(MODAL_ADD_CPU_THREAD, props, dispatch)
   }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      index:         0,
-      intensity:     1000,
-      worksize:      8,
-      affine_to_cpu: false,
-      strided_index: props.platform === 'NVIDIA' ? 0 : 2,
-      mem_chunk:     2,
-      unroll:        8
+      low_power_mode: 1,
+      affine_to_cpu:  false,
+      asm:            1
     };
   }
 
@@ -33,18 +30,13 @@ export default class AddOclThreadModal extends AsyncModal {
     return (
       <Modal>
         <Header dismiss={this.props.dismiss}>
-          <Title><Icon icon="plus" /> Add new OpenCL thread</Title>
+          <Title><Icon icon="plus" /> Add new CPU thread</Title>
         </Header>
         <Body>
-          <OclThreadForm
-            index={this.state.index}
-            intensity={this.state.intensity}
-            worksize={this.state.worksize}
+          <CpuThreadForm
+            low_power_mode={this.state.low_power_mode}
             affine_to_cpu={this.state.affine_to_cpu}
-            platform={this.props.platform}
-            strided_index={this.state.strided_index}
-            mem_chunk={this.state.mem_chunk}
-            unroll={this.state.unroll}
+            asm={this.state.asm}
             update={this.update}
             submit={this.submit}
           />
@@ -68,7 +60,4 @@ export default class AddOclThreadModal extends AsyncModal {
   update = state => {
     this.setState(state);
   };
-
-
-
 }

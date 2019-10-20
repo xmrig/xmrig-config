@@ -20,7 +20,8 @@ export default class Navbar extends React.PureComponent {
               <span className="icon-bar" />
               <span className="icon-bar" />
             </button>
-            <Link to="/" className="navbar-brand"><Icon icon={['fab', 'monero']} /> XMRig CONFIG</Link>
+            <Link to="/" className="navbar-brand"><img alt="Brand" src="/assets/img/xmrig_logo.svg" width={32} height={32} style={{marginTop:-6}} /></Link>
+            <Link to="/" className="navbar-brand">XMRig CONFIG</Link>
           </div>
           <div id="navbar" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
@@ -39,7 +40,10 @@ export default class Navbar extends React.PureComponent {
               <li className={cn({ active: this.props.path === '/presets' })}><Link to="/presets"><Icon icon="sliders-h" /> Presets</Link></li>
             </ul>
             <p className="navbar-text navbar-right">
-              <a href="https://github.com/xmrig/xmrig-config" target="_blank" className="navbar-link"><Icon size="lg" icon={['fab', 'github']} /></a>
+              <a title="Twitter" href="https://twitter.com/xmrig_dev" target="_blank" className="navbar-link" style={{ marginRight: 12 }}><Icon size="lg" icon={['fab', 'twitter']} /></a>
+              <a title="reddit" href="https://www.reddit.com/u/XMRig" target="_blank" className="navbar-link" style={{ marginRight: 12 }}><Icon size="lg" icon={['fab', 'reddit']} /></a>
+              <a title="Telegram" href="https://t.me/xmrig" target="_blank" className="navbar-link" style={{ marginRight: 12 }}><Icon size="lg" icon={['fab', 'telegram']} /></a>
+              <a title="GitHub" href="https://github.com/xmrig/xmrig-config" target="_blank" className="navbar-link"><Icon size="lg" icon={['fab', 'github']} /></a>
             </p>
           </div>
         </div>

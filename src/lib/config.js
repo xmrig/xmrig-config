@@ -1,13 +1,31 @@
 'use strict';
 
 import bs58 from 'bs58';
+import isUndefined from 'lodash/isUndefined';
 import isArray from 'lodash/isArray';
 import {
-  ALGO_CRYPTONIGHT_LITE, KIND_AMD_LEGACY, KIND_NVIDIA_LEGACY, KIND_PROXY, KIND_XMRIG, MODE_AUTO, MODE_MANUAL,
+  ALGO_CRYPTONIGHT,
+  ALGO_CRYPTONIGHT_HEAVY,
+  ALGO_CRYPTONIGHT_LITE,
+  algoName,
+  KIND_AMD_LEGACY,
+  KIND_NVIDIA_LEGACY,
+  KIND_PROXY,
+  KIND_XMRIG,
+  MODE_ADVANCED,
+  MODE_AUTO,
+  MODE_MANUAL,
   OS_WINDOWS
 } from '../constants/options';
 import products from '../constants/products';
 import v1 from './serialization/v1';
+import sortObject from "./sortObject";
+
+
+const CPU_LOW_POWER_MODE = [ false, true, 3, 4, 5];
+const CPU_ASM            = [ false, true, 'intel', 'ryzen'];
+const PROXY_WORKERS_CMD  = [ 'none', 'rig_id', 'user', 'password', 'agent', 'ip'];
+const PROXY_WORKERS      = [ false, true, 'user', 'password', 'agent', 'ip'];
 
 
 function escape(str) {
@@ -32,8 +50,8 @@ export const getCommandLine = (type, options) => {
   const array = [];
   array.push(options.os === OS_WINDOWS ? `${product.exe}.exe` : `./${product.exe}`);
 
-  if (options.algo === ALGO_CRYPTONIGHT_LITE) {
-    array.push(isProxy ? '--coin aeon' : '-a cryptonight-lite');
+  if (options.algo !== ALGO_CRYPTONIGHT) {
+    array.push(`-a ${algoName(options.algo, options.version)}`);
   }
 
   if (options.background) {
@@ -76,12 +94,32 @@ export const getCommandLine = (type, options) => {
 
     strOption(array, '--api-worker-id', options.apiId);
     strOption(array, '--api-access-token', options.apiToken);
+
+    if (options.apiIPv6) {
+      array.push('--api-ipv6');
+    }
+
+    if (options.apiToken && options.apiFull) {
+      array.push('--api-no-restricted');
+    }
   }
 
   if (isProxy) {
     const bind = options.bind.split('\n').filter(bind => !!bind);
     for (let addr of bind) {
       array.push(`-b ${addr}`);
+    }
+
+    if (options.mode === 1) {
+      array.push(`-m simple`);
+    }
+
+    if (options.workers !== 1) {
+      array.push(`--workers ${PROXY_WORKERS_CMD[options.workers]}`);
+    }
+
+    if (options.diff >= 100) {
+      array.push(`--custom-diff ${options.diff}`);
     }
   }
 
@@ -128,22 +166,37 @@ export const getCommandLine = (type, options) => {
     }
   }
 
-  if (type === KIND_AMD_LEGACY && options.oclThreads.mode === MODE_MANUAL) {
+  if (type === KIND_AMD_LEGACY) {
     const { oclThreads } = options;
 
-    array.push(`--opencl-platform ${oclThreads.platform}`);
+    if (oclThreads.mode === MODE_MANUAL) {
+      array.push(`--opencl-platform ${oclThreads.platform}`);
 
-    if (oclThreads.threads && oclThreads.threads.length) {
-      array.push('--opencl-devices');
-      array.push(oclThreads.threads.map(thread => thread.index).join(','));
-      array.push('--opencl-launch');
-      array.push(oclThreads.threads.map(thread => thread.intensity + 'x' + thread.worksize).join(','));
+      if (oclThreads.threads && oclThreads.threads.length) {
+        array.push('--opencl-devices');
+        array.push(oclThreads.threads.map(thread => thread.index).join(','));
+        array.push('--opencl-launch');
+        array.push(oclThreads.threads.map(thread => thread.intensity + 'x' + thread.worksize).join(','));
 
-      const affinity = oclThreads.threads.filter(thread => thread.affine_to_cpu !== false);
-      if (affinity.length) {
-        array.push('--opencl-affinity');
-        array.push(oclThreads.threads.map(thread => thread.affine_to_cpu === false ? -1 : thread.affine_to_cpu).join(','));
+        const affinity = oclThreads.threads.filter(thread => thread.affine_to_cpu !== false);
+        if (affinity.length) {
+          array.push('--opencl-affinity');
+          array.push(oclThreads.threads.map(thread => thread.affine_to_cpu === false ? -1 : thread.affine_to_cpu).join(','));
+        }
+
+        array.push('--opencl-strided-index');
+        array.push(oclThreads.threads.map(thread => thread.strided_index || (oclThreads.platform === 'NVIDIA' ? 0 : 2)).join(','));
+
+        array.push('--opencl-mem-chunk');
+        array.push(oclThreads.threads.map(thread => thread.mem_chunk || 2).join(','));
+
+        array.push('--opencl-unroll');
+        array.push(oclThreads.threads.map(thread => isUndefined(thread.unroll) ? 8 : thread.unroll).join(','));
       }
+    }
+
+    if (oclThreads.mode === MODE_AUTO && oclThreads.platform !== 'AMD') {
+      array.push(`--opencl-platform ${oclThreads.platform}`);
     }
   }
 
@@ -191,11 +244,19 @@ export const getCommandLine = (type, options) => {
     array.push(`-u ${pool.user ? pool.user : 'x'}`);
     array.push(`-p ${pool.pass ? pool.pass : 'x'}`);
 
-    if (!isProxy) {
-      if (pool.keepalive) {
-        array.push('-k');
-      }
+    if (pool.variant !== -1 && pool.variant != null) {
+      array.push(`--variant ${pool.variant}`);
+    }
 
+    if (pool.keepalive) {
+      array.push('-k');
+    }
+
+    if (pool.tls) {
+      array.push('--tls');
+    }
+
+    if (!isProxy) {
       if (pool.nicehash) {
         array.push('--nicehash');
       }
@@ -210,12 +271,7 @@ export const getJSON = (type, options, str = true) => {
   const result  = {};
   const isProxy = type === KIND_PROXY;
 
-  if (isProxy) {
-    result.coin = options.algo === ALGO_CRYPTONIGHT_LITE ? 'aeon' : 'xmr';
-  }
-  else {
-    result.algo = options.algo === ALGO_CRYPTONIGHT_LITE ? 'cryptonight-lite' : 'cryptonight';
-  }
+  result.algo = algoName(options.algo, options.version);
 
   result.background      = !!options.background;
   result.colors          = !!options.colors;
@@ -240,20 +296,30 @@ export const getJSON = (type, options, str = true) => {
   if (type === KIND_XMRIG) {
     const { cpuThreads } = options;
 
+    result.av                = cpuThreads.av;
+    result['max-cpu-usage']  = cpuThreads.max;
+    result['cpu-priority']   = cpuThreads.priority === 2 ? null : cpuThreads.priority;
+    result['huge-pages']     = cpuThreads.noPages === 0;
+    result["hw-aes"]         = cpuThreads.aes === -1 ? null : !!cpuThreads.aes;
+
     if (cpuThreads.mode === MODE_AUTO) {
-      result.av               = cpuThreads.av;
-      result.safe             = cpuThreads.av > 0;
-      result['max-cpu-usage'] = cpuThreads.max;
-      result['cpu-priority']  = cpuThreads.priority === 2 ? null : cpuThreads.priority;
-      result.threads          = null;
+      result.safe            = cpuThreads.av > 0;
+      result.threads         = null;
+      result['cpu-affinity'] = null;
     }
     else if (cpuThreads.mode === MODE_MANUAL) {
-      result.av               = cpuThreads.av;
-      result.safe             = !!cpuThreads.safe;
-      result['cpu-priority']  = cpuThreads.priority === 2 ? null : cpuThreads.priority;
-      result['cpu-affinity']  = cpuThreads.affinity ? cpuThreads.affinity : null;
-      result['huge-pages']    = cpuThreads.noPages === 1 ? false : undefined;
-      result.threads          = cpuThreads.count;
+      result.safe            = !!cpuThreads.safe;
+      result.threads         = cpuThreads.count;
+      result['cpu-affinity'] = cpuThreads.affinity ? cpuThreads.affinity : null;
+    }
+    else if (cpuThreads.mode === MODE_ADVANCED) {
+      result.safe            = false;
+      result['cpu-affinity'] = null;
+      result.threads         = cpuThreads.threads.map(thread => ({
+        low_power_mode: CPU_LOW_POWER_MODE[thread.low_power_mode - 1],
+        affine_to_cpu:  thread.affine_to_cpu,
+        asm:            CPU_ASM[thread.asm]
+      }));
     }
   }
 
@@ -278,8 +344,8 @@ export const getJSON = (type, options, str = true) => {
         const bsleep  = cudaThreads.bfactor === defaultBSleep  ? undefined : cudaThreads.bsleep;
 
         // https://github.com/xmrig/xmrig-nvidia/commit/7f2f86fd418ccd95540335dac4b61430c6649049
-        result['cuda-bfactor'] = options.version === 20400 ? ('' + bfactor) : bfactor;
-        result['cuda-bsleep']  = options.version === 20400 ? ('' + bsleep)  : bsleep;
+        result['cuda-bfactor'] = bfactor;
+        result['cuda-bsleep']  = bsleep;
       }
 
       result.threads = null;
@@ -291,32 +357,47 @@ export const getJSON = (type, options, str = true) => {
 
   if (isProxy) {
     result.pools = options.pools.filter(pool => pool.enabled).map(pool => ({
-      url:       pool.url,
-      user:      pool.user,
-      pass:      pool.pass
+      url:               pool.url,
+      user:              pool.user,
+      pass:              pool.pass || 'x',
+      keepalive:         !!pool.keepalive,
+      variant:           pool.variant,
+      tls:               !!pool.tls,
+      'tls-fingerprint': null,
     }));
   }
   else {
     result.pools = options.pools.filter(pool => pool.enabled).map(pool => ({
-      url:       pool.url,
-      user:      pool.user,
-      pass:      pool.pass,
-      keepalive: !!pool.keepalive,
-      nicehash:  !!pool.nicehash
+      url:               pool.url,
+      user:              pool.user,
+      pass:              pool.pass || 'x',
+      keepalive:         !!pool.keepalive,
+      nicehash:          !!pool.nicehash,
+      variant:           pool.variant,
+      tls:               !!pool.tls,
+      'tls-fingerprint': null,
     }));
   }
 
   if (isProxy) {
-    result.bind = options.bind.split('\n').filter(bind => !!bind);
+    result.bind    = options.bind.split('\n').filter(bind => !!bind);
+    result.mode    = options.mode === 1 ? 'simple' : 'nicehash';
+    result.workers = PROXY_WORKERS[options.workers];
+
+    if (options.diff >= 100) {
+      result['custom-diff'] = options.diff;
+    }
   }
 
   result.api = {
     port:             +options.apiPort,
     ['access-token']: options.apiToken ? options.apiToken : null,
-    ['worker-id']:    options.apiId ? options.apiId : null
+    ['worker-id']:    options.apiId ? options.apiId : null,
+    ipv6:             !!options.apiIPv6,
+    restricted:       !options.apiFull
   };
 
-  return str === true ? JSON.stringify(result, null, 4) : result;
+  return str === true ? JSON.stringify(sortObject(result), null, 4) : result;
 };
 
 

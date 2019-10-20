@@ -1,7 +1,10 @@
 import fontawesome from '@fortawesome/fontawesome';
 import faGithub from '@fortawesome/fontawesome-free-brands/faGithub';
 import faMonero from '@fortawesome/fontawesome-free-brands/faMonero';
+import faReddit from '@fortawesome/fontawesome-free-brands/faReddit';
+import faTwitter from '@fortawesome/fontawesome-free-brands/faTwitter';
 import faWindows from '@fortawesome/fontawesome-free-brands/faWindows';
+import faTelegram from '@fortawesome/fontawesome-free-brands/faTelegram';
 import faLinux from '@fortawesome/fontawesome-free-brands/faLinux';
 import faApple from '@fortawesome/fontawesome-free-brands/faApple';
 import faFlag from '@fortawesome/fontawesome-free-solid/faFlag';
@@ -23,7 +26,9 @@ import faSave from '@fortawesome/fontawesome-free-solid/faSave';
 import faSlidersH from '@fortawesome/fontawesome-free-solid/faSlidersH';
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
+import faQuestionCircle from '@fortawesome/fontawesome-free-solid/faQuestionCircle';
 
 fontawesome.library.add(faGithub, faMonero, faWindows, faLinux, faApple, faFlag, faPlug, faMicrochip, faCog,
                         faFlagCheckered, faCopy, faPencilAlt, faTrashAlt, faPlus, faEllipsisV, faTimes, faTimesCircle,
-                        faExclamationTriangle, faDownload, faShareAlt, faSave, faSlidersH, faCheck, faCheckCircle);
+                        faExclamationTriangle, faDownload, faShareAlt, faSave, faSlidersH, faCheck, faCheckCircle,
+                        faQuestionCircle, faReddit, faTwitter, faTelegram);

@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {ALGO_CRYPTONIGHT_LITE} from "../../constants/options";
+import Icon from '@fortawesome/react-fontawesome';
 
 
 export default class CPUManualForm extends React.PureComponent {
@@ -14,13 +14,19 @@ export default class CPUManualForm extends React.PureComponent {
         </div>
 
         <div className="form-group">
-          <label htmlFor="cpuAV">Algorithm variation</label>
+          <label htmlFor="cpuAV">Algorithm <a href="https://github.com/xmrig/xmrig/tree/dev#algorithm-variations" target="_blank">variation <Icon icon="question-circle" /></a></label>
           <select className="form-control" value={this.props.av} id="cpuAV" name="av" onChange={this.handleInputChange} style={{maxWidth: 150}}>
-            <option value={0}>Auto</option>
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
+            <option value={0}>0 Auto</option>
+            <option value={1}>1 Single/AES</option>
+            <option value={2}>2 Double/AES</option>
+            <option value={3}>3 Single</option>
+            <option value={4}>4 Double</option>
+            <option value={5}>5 Triple/AES</option>
+            <option value={6}>6 Quard/AES</option>
+            <option value={7}>7 Penta/AES</option>
+            <option value={8}>8 Triple</option>
+            <option value={9}>9 Quard</option>
+            <option value={10}>10 Penta</option>
           </select>
         </div>
 
@@ -53,18 +59,6 @@ export default class CPUManualForm extends React.PureComponent {
   }
 
 
-  renderCacheHint() {
-    const av = this.av();
-    if (av === 0) {
-      return;
-    }
-
-    const size = av * (this.props.algo === ALGO_CRYPTONIGHT_LITE ? 1 : 2);
-
-    return <div style={{marginBottom: 5}} className="help-block"><b>{size} MB</b> CPU cache required per thread</div>;
-  }
-
-
   handleInputChange = event => {
     const target = event.target;
     const value  = target.type === 'checkbox' ? +target.checked : (target.type === 'text' ? target.value : +target.value);
@@ -73,25 +67,4 @@ export default class CPUManualForm extends React.PureComponent {
       [target.name]: value
     });
   };
-
-
-  av() {
-    const av = this.props.av;
-
-    switch (av) {
-      case 0:
-      case 1:
-      case 2:
-        return av;
-
-      case 3:
-        return 1;
-
-      case 4:
-        return 2;
-
-      default:
-        return 0;
-    }
-  }
 }
