@@ -7,6 +7,7 @@ import Tabs from './Tabs';
 import LoggingForm from './misc/LoggingForm';
 import ConnectionForm from './misc/ConnectionForm';
 import OtherForm from './misc/OtherForm';
+import Deprecated from "./Deprecated";
 
 
 export default class Misc extends React.PureComponent {
@@ -17,6 +18,8 @@ export default class Misc extends React.PureComponent {
       <div>
         <Navbar type={type} path="/misc" />
         <div className="container">
+          {this.renderDeprecated()}
+
           <Tabs type={type} path="/misc" />
 
           <h2>Console output & logging</h2>
@@ -45,5 +48,14 @@ export default class Misc extends React.PureComponent {
         </div>
       </div>
     );
+  }
+
+
+  renderDeprecated() {
+    const { type } = this.props;
+
+    if (type === 'xmrig' || type === 'amd') {
+      return <Deprecated />;
+    }
   }
 }

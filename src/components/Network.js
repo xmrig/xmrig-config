@@ -9,6 +9,7 @@ import ApiForm from './network/ApiForm';
 import PoolRow from './network/PoolRow';
 import {KIND_PROXY} from "../constants/options";
 import ProxyForm from "./network/ProxyForm";
+import Deprecated from "./Deprecated";
 
 
 export default class Network extends React.PureComponent {
@@ -19,6 +20,8 @@ export default class Network extends React.PureComponent {
       <div>
         <Navbar type={type} path="/network" />
         <div className="container">
+          {this.renderDeprecated()}
+
           <Tabs type={type} path="/network" />
 
           <h2>Pools <button className="btn btn-success" onClick={this.add}><Icon icon="plus" /> Add</button></h2>
@@ -79,6 +82,15 @@ export default class Network extends React.PureComponent {
         />
       </div>
     );
+  }
+
+
+  renderDeprecated() {
+    const { type } = this.props;
+
+    if (type === 'xmrig' || type === 'amd') {
+      return <Deprecated />;
+    }
   }
 
 

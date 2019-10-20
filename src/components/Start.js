@@ -16,6 +16,7 @@ import {
   OS_X,
   ALGO_CRYPTONIGHT_HEAVY, ALGO_CRYPTONIGHT_PICO
 } from '../constants/options';
+import Deprecated from "./Deprecated";
 
 
 export default class Start extends React.PureComponent {
@@ -26,6 +27,8 @@ export default class Start extends React.PureComponent {
       <div>
         <Navbar type={type} path="" />
         <div className="container">
+          {this.renderDeprecated()}
+
           <Tabs type={type} path="" />
           <h2>Version</h2>
           <VersionForm version={this.props.version} update={this.props.update} />
@@ -85,5 +88,14 @@ export default class Start extends React.PureComponent {
         <Icon icon={['fab', icon]} /> {name}
       </button>
     );
+  }
+
+
+  renderDeprecated() {
+    const { type } = this.props;
+
+    if (type === 'xmrig' || type === 'amd') {
+      return <Deprecated />;
+    }
   }
 }

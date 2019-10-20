@@ -8,6 +8,7 @@ import OclThreads from "./threads/OclThreads";
 import {MODE_UNAVAILABLE} from "../constants/options";
 import CUDAThreads from "./threads/CUDAThreads";
 import CPUThreads from "./threads/CPUThreads";
+import Deprecated from "./Deprecated";
 
 
 export default class Threads extends React.PureComponent {
@@ -18,6 +19,8 @@ export default class Threads extends React.PureComponent {
       <div>
         <Navbar type={type} path="/threads" />
         <div className="container">
+          {this.renderDeprecated()}
+
           <Tabs type={type} path="/threads" />
 
           {this.renderCPU()}
@@ -82,6 +85,15 @@ export default class Threads extends React.PureComponent {
         update={this.props.update}
         dispatch={this.props.dispatch}
       />
+    }
+  }
+
+
+  renderDeprecated() {
+    const { type } = this.props;
+
+    if (type === 'xmrig' || type === 'amd') {
+      return <Deprecated />;
     }
   }
 }

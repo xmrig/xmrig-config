@@ -15,6 +15,7 @@ import { serialize } from '../lib/config';
 import {addOrChangePreset} from "../actions/presets";
 import SharePresetModal from "./modals/SharePresetModal";
 import {KIND_XMRIG, MODE_ADVANCED} from "../constants/options";
+import Deprecated from "./Deprecated";
 
 
 export default class Result extends React.PureComponent {
@@ -25,6 +26,8 @@ export default class Result extends React.PureComponent {
       <div>
         <Navbar type={type} path="/result" />
         <div className="container">
+          {this.renderDeprecated()}
+          
           <Tabs type={type} path="/result" />
 
           <h2>Preset
@@ -87,6 +90,15 @@ export default class Result extends React.PureComponent {
   renderRAW() {
     if (process.env.NODE_ENV !== 'production') {
       return <pre>{JSON.stringify(serialize(this.props.type, this.props.config, false))}</pre>
+    }
+  }
+
+
+  renderDeprecated() {
+    const { type } = this.props;
+
+    if (type === 'xmrig' || type === 'amd') {
+      return <Deprecated />;
     }
   }
 
