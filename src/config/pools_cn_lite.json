@@ -18,7 +18,19 @@
         "code": "AEON",
         "name": "AEON",
         "url": "pool.aeon.hashvault.pro:3333",
-        "variant": 1
+        "variant": -1
+      },
+      {
+        "code": "IRD",
+        "name": "Iridium",
+        "url": "pool.iridium.hashvault.pro:4445",
+        "variant": -1
+      },
+      {
+        "code": "XTRI",
+        "name": "Triton",
+        "url": "pool.triton.hashvault.pro:3333",
+        "variant": -1
       }
     ]
   },
